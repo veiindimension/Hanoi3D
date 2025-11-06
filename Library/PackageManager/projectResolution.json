@@ -48,6 +48,16 @@
       "source": "builtin",
       "testable": false
     },
+    "com.unity.shadergraph@17.2.0": {
+      "name": "com.unity.shadergraph",
+      "displayName": "Shader Graph",
+      "resolvedPath": "F:\\MANU\\PROGETTI\\Unity Projects\\Hanoi3D\\Hanoi3DTEST\\Library\\PackageCache\\com.unity.shadergraph@287dd3fa176c",
+      "fingerprint": "287dd3fa176ca6d32a0e7df9c31073ff2700e705",
+      "editorCompatibility": "6000.2.0a1",
+      "version": "17.2.0",
+      "source": "builtin",
+      "testable": false
+    },
     "com.unity.timeline@1.8.9": {
       "name": "com.unity.timeline",
       "displayName": "Timeline",
@@ -350,6 +360,26 @@
       "source": "builtin",
       "testable": false
     },
+    "com.unity.render-pipelines.core@17.2.0": {
+      "name": "com.unity.render-pipelines.core",
+      "displayName": "Scriptable Render Pipeline Core",
+      "resolvedPath": "F:\\MANU\\PROGETTI\\Unity Projects\\Hanoi3D\\Hanoi3DTEST\\Library\\PackageCache\\com.unity.render-pipelines.core@5e056b397fc0",
+      "fingerprint": "5e056b397fc0d6a40852063f677043eb1d27105c",
+      "editorCompatibility": "6000.2.0a1",
+      "version": "17.2.0",
+      "source": "builtin",
+      "testable": false
+    },
+    "com.unity.searcher@4.9.3": {
+      "name": "com.unity.searcher",
+      "displayName": "Searcher",
+      "resolvedPath": "F:\\MANU\\PROGETTI\\Unity Projects\\Hanoi3D\\Hanoi3DTEST\\Library\\PackageCache\\com.unity.searcher@1e17ce91558d",
+      "fingerprint": "1e17ce91558d1d9127554adc03d275f39a7466a2",
+      "editorCompatibility": "2019.1.0a1",
+      "version": "4.9.3",
+      "source": "registry",
+      "testable": false
+    },
     "com.unity.ide.visualstudio@2.0.23": {
       "name": "com.unity.ide.visualstudio",
       "displayName": "Visual Studio Editor",
@@ -410,6 +440,46 @@
       "source": "registry",
       "testable": false
     },
+    "com.unity.burst@1.8.24": {
+      "name": "com.unity.burst",
+      "displayName": "Burst",
+      "resolvedPath": "F:\\MANU\\PROGETTI\\Unity Projects\\Hanoi3D\\Hanoi3DTEST\\Library\\PackageCache\\com.unity.burst@f7a407abf4d5",
+      "fingerprint": "f7a407abf4d5abf19ce630824dcde261e02ed97e",
+      "editorCompatibility": "2021.3.0a1",
+      "version": "1.8.24",
+      "source": "registry",
+      "testable": false
+    },
+    "com.unity.mathematics@1.3.2": {
+      "name": "com.unity.mathematics",
+      "displayName": "Mathematics",
+      "resolvedPath": "F:\\MANU\\PROGETTI\\Unity Projects\\Hanoi3D\\Hanoi3DTEST\\Library\\PackageCache\\com.unity.mathematics@8017b507cc74",
+      "fingerprint": "8017b507cc74bf0a1dd14b18aa860569f807314d",
+      "editorCompatibility": "2021.3.0a1",
+      "version": "1.3.2",
+      "source": "registry",
+      "testable": false
+    },
+    "com.unity.collections@2.5.7": {
+      "name": "com.unity.collections",
+      "displayName": "Collections",
+      "resolvedPath": "F:\\MANU\\PROGETTI\\Unity Projects\\Hanoi3D\\Hanoi3DTEST\\Library\\PackageCache\\com.unity.collections@d49facba0036",
+      "fingerprint": "d49facba0036aa0e1508296262f9d93b44d1ab3b",
+      "editorCompatibility": "2022.3.20f1",
+      "version": "2.5.7",
+      "source": "registry",
+      "testable": false
+    },
+    "com.unity.rendering.light-transport@1.0.1": {
+      "name": "com.unity.rendering.light-transport",
+      "displayName": "Unity Light Transport Library",
+      "resolvedPath": "F:\\MANU\\PROGETTI\\Unity Projects\\Hanoi3D\\Hanoi3DTEST\\Library\\PackageCache\\com.unity.rendering.light-transport@2c9279f90d7c",
+      "fingerprint": "2c9279f90d7c8dfb6e76e3f90b6b3be1cafabfbc",
+      "editorCompatibility": "2023.3.0b1",
+      "version": "1.0.1",
+      "source": "builtin",
+      "testable": false
+    },
     "com.unity.settings-manager@2.1.0": {
       "name": "com.unity.settings-manager",
       "displayName": "Settings Manager",
@@ -428,6 +498,26 @@
       "editorCompatibility": "2019.4.0a1",
       "version": "2.0.5",
       "source": "builtin",
+      "testable": false
+    },
+    "com.unity.nuget.mono-cecil@1.11.5": {
+      "name": "com.unity.nuget.mono-cecil",
+      "displayName": "Mono Cecil",
+      "resolvedPath": "F:\\MANU\\PROGETTI\\Unity Projects\\Hanoi3D\\Hanoi3DTEST\\Library\\PackageCache\\com.unity.nuget.mono-cecil@d78732e851eb",
+      "fingerprint": "d78732e851eb42273c8e4d97993d3a94b207e570",
+      "editorCompatibility": "2019.4.0a1",
+      "version": "1.11.5",
+      "source": "registry",
+      "testable": false
+    },
+    "com.unity.test-framework.performance@3.1.0": {
+      "name": "com.unity.test-framework.performance",
+      "displayName": "Performance testing API",
+      "resolvedPath": "F:\\MANU\\PROGETTI\\Unity Projects\\Hanoi3D\\Hanoi3DTEST\\Library\\PackageCache\\com.unity.test-framework.performance@92d1d09a72ed",
+      "fingerprint": "92d1d09a72ed696fa23fd76c675b29d211664b50",
+      "editorCompatibility": "2020.3.0a1",
+      "version": "3.1.0",
+      "source": "registry",
       "testable": false
     }
   }
