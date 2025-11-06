@@ -2,12 +2,13 @@
 using Hanoi.Model;
 using Hanoi.Controller;
 using System.Collections;
+using System.Linq;
 
 namespace Hanoi.View
 {
     /// <summary>
-    /// Handles selection, dragging and dropping of a disk.
-    /// Includes outline color feedback and respawn logic if dropped outside towers.
+    /// DiskView: visual + physics behaviour.
+    /// Methods OnHoverEnter/Exit/OnPick/OnRelease are called by GameController (raycast input).
     /// </summary>
     [RequireComponent(typeof(Collider))]
     [RequireComponent(typeof(Rigidbody))]
@@ -19,34 +20,38 @@ namespace Hanoi.View
         private Rigidbody rb;
         private Renderer rend;
         private Material baseMaterial;
-        [SerializeField] private Material outlineMaterial;
+        [SerializeField] private Material outlineMaterial; // assign M_Outline in prefab
 
-        // --- Dragging ---
+        // drag physics
         private bool isHeld = false;
         private Camera mainCamera;
-        private float liftHeight = 2.0f;
-        private float followSpeed = 12f;
+        [SerializeField] private float liftHeight = 2.0f;
+        [SerializeField] private float followSpeed = 12f;
 
-        // --- Shape ---
+        // visual params (set in inspector or keep defaults)
         [SerializeField] private float baseThickness = 1.0f;
         [SerializeField] private float minRadius = 1.0f;
         [SerializeField] private float maxRadius = 1.8f;
 
-        // --- Respawn ---
+        // respawn
         private Vector3 initialPosition;
-        private bool landedOnTower = false;
 
         private void Awake()
         {
             rb = GetComponent<Rigidbody>();
             rend = GetComponentInChildren<Renderer>();
-            baseMaterial = rend.material;
+            if (rend == null) Debug.LogError("[DiskView] Renderer not found in children.");
+            baseMaterial = (rend != null) ? rend.material : null;
             mainCamera = Camera.main;
+            if (mainCamera == null) Debug.LogError("[DiskView] Camera.main is null. Tag your camera 'MainCamera'.");
 
-            // Rigidbody setup
-            rb.useGravity = true;
-            rb.isKinematic = false;
-            rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+            // ensure RB settings are reasonable
+            if (rb != null)
+            {
+                rb.useGravity = true;
+                rb.isKinematic = false;
+                rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+            }
         }
 
         public void Initialize(DiskModel diskModel, GameController gameController)
@@ -54,84 +59,86 @@ namespace Hanoi.View
             model = diskModel;
             controller = gameController;
 
-            int total = controller.GetGameModel().DiskCount;
-            float t = (total > 1) ? (model.Size - 1) / (float)(total - 1) : 0f;
+            int total = 1;
+            if (controller != null && controller.GetGameModel() != null)
+                total = controller.GetGameModel().DiskCount;
 
+            float t = (total > 1) ? (model.Size - 1) / (float)(total - 1) : 0f;
             float radius = Mathf.Lerp(minRadius, maxRadius, t);
             transform.localScale = new Vector3(radius, baseThickness, radius);
 
-            // Random color
-            Color randomColor = new Color(
-                Random.Range(0.3f, 1f),
-                Random.Range(0.3f, 1f),
-                Random.Range(0.3f, 1f)
-            );
-            baseMaterial.color = randomColor;
+            // random color for base material
+            if (baseMaterial != null)
+            {
+                Color randomColor = new Color(Random.Range(0.3f, 1f), Random.Range(0.3f, 1f), Random.Range(0.3f, 1f));
+                baseMaterial.color = randomColor;
+            }
 
+            // store initial pos (spawned position)
             initialPosition = transform.position;
         }
 
-        // --------------------------------------------------------------------
-        // OUTLINE LOGIC
-        // --------------------------------------------------------------------
-        public void ShowOutline(Color color)
+        // ---------- Called by controller when raycast hits this disk ----------
+        public void OnHoverEnter(bool canPick)
         {
-            if (rend == null || outlineMaterial == null) return;
-            outlineMaterial.color = color;
+            if (rend == null) return;
+            if (outlineMaterial == null)
+            {
+                // fallback: tint base material slightly
+                if (baseMaterial != null)
+                    baseMaterial.color = canPick ? Color.green : Color.red;
+                return;
+            }
+
+            // set outline material color and apply
+            outlineMaterial.color = canPick ? Color.green : Color.red;
             rend.material = outlineMaterial;
         }
 
-        public void HideOutline()
+        public void OnHoverExit()
         {
-            if (rend == null || baseMaterial == null) return;
-            rend.material = baseMaterial;
+            if (rend == null) return;
+            if (baseMaterial != null)
+                rend.material = baseMaterial;
         }
 
-        private void OnMouseEnter()
+        // ---------- Pick up / release called by controller ----------
+        public void OnPick()
         {
-            if (controller == null) return;
+            if (rb == null) return;
 
-            bool canPick = controller.CanSelectDisk(this);
-            if (canPick)
-                ShowOutline(Color.green); // in cima → verde
-            else
-                ShowOutline(Color.red);   // non in cima → rosso
-        }
-
-        private void OnMouseExit()
-        {
-            HideOutline();
-        }
-
-        // --------------------------------------------------------------------
-        // DRAG + DROP LOGIC
-        // --------------------------------------------------------------------
-        private void OnMouseDown()
-        {
-            if (controller == null) return;
-            if (!controller.CanSelectDisk(this)) return;
-
-            controller.OnDiskSelected(this);
+            // only allow pick if controller says so (extra safety)
+            if (controller != null && !controller.CanSelectDisk(this))
+            {
+                Debug.Log("[DiskView] OnPick called but disk not selectable.");
+                return;
+            }
 
             isHeld = true;
             rb.useGravity = false;
             rb.isKinematic = true;
-            landedOnTower = false;
 
-            ShowOutline(Color.yellow); // selezionato
+            // visual feedback: yellow outline if possible
+            if (outlineMaterial != null)
+            {
+                outlineMaterial.color = Color.yellow;
+                rend.material = outlineMaterial;
+            }
         }
 
-        private void OnMouseUp()
+        public void OnRelease()
         {
-            if (!isHeld) return;
+            if (rb == null) return;
 
             isHeld = false;
             rb.isKinematic = false;
             rb.useGravity = true;
 
-            HideOutline();
+            // restore material immediately (or wait)
+            if (baseMaterial != null)
+                rend.material = baseMaterial;
 
-            // Avvia la verifica del posizionamento dopo la caduta
+            // after a short delay, check landing
             StartCoroutine(CheckLandingAfterDelay());
         }
 
@@ -145,56 +152,118 @@ namespace Hanoi.View
         {
             if (mainCamera == null) return;
 
-            Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out RaycastHit hit, 100f))
-            {
-                Vector3 targetPos = hit.point;
-                targetPos.y += liftHeight;
-                transform.position = Vector3.Lerp(transform.position, targetPos, Time.deltaTime * followSpeed);
-            }
+            // Read current mouse position (in screen coordinates)
+            Vector3 mousePos = Input.mousePosition;
+
+            // Add a fixed depth value so we can convert it to a world position.
+            // This depth should roughly match the Z distance of the disk from the camera.
+            // The larger this value, the further away the "drag plane" is.
+            mousePos.z = Mathf.Abs(mainCamera.transform.position.z - transform.position.z);
+
+            // Convert screen position → world position
+            Vector3 target = mainCamera.ScreenToWorldPoint(mousePos);
+
+            // ✅ Lock movement to X and Y (let them move)
+            //    but keep the same Z value as the original disk (no depth movement)
+            target.z = transform.position.z;
+
+            // Smooth movement for a nice drag feeling
+            transform.position = Vector3.Lerp(transform.position, target, Time.deltaTime * followSpeed);
         }
 
-        // --------------------------------------------------------------------
-        // LANDING + RESPAWN LOGIC
-        // --------------------------------------------------------------------
-        private IEnumerator CheckLandingAfterDelay()
+        /// <summary>
+        /// Moves the disk back to its original starting position
+        /// (used when the player drops it outside of any valid tower area).
+        /// </summary>
+        public void ResetToInitialPosition()
         {
-            // aspetta mezzo secondo per permettere alla fisica di fermarsi
-            yield return new WaitForSeconds(0.5f);
+            // Instantly move the disk back to where it started
+            transform.position = initialPosition;
 
-            // controlla se è sopra una torre
-            landedOnTower = false;
-            foreach (Transform tower in controller.GetTowerTransforms())
+            // Stop any residual motion if using physics
+            Rigidbody rb = GetComponent<Rigidbody>();
+            if (rb != null)
             {
-                float distance = Vector3.Distance(new Vector3(transform.position.x, 0, transform.position.z),
-                                                  new Vector3(tower.position.x, 0, tower.position.z));
-                if (distance < 1.5f) // distanza accettabile per considerare la torre "centrata"
-                {
-                    landedOnTower = true;
-                    break;
-                }
+                rb.linearVelocity = Vector3.zero;
+                rb.angularVelocity = Vector3.zero;
             }
 
-            if (!landedOnTower)
+            Debug.Log("[DiskView] Disk reset to initial position.");
+        }
+
+
+
+        /// <summary>
+        /// After a short delay (to let physics settle), this method checks 
+        /// where the disk has landed and updates its logical tower accordingly.
+        /// If the disk is too far from any tower, it resets to its original position.
+        /// </summary>
+        private System.Collections.IEnumerator CheckLandingAfterDelay()
+        {
+            // Wait a short time to ensure the disk has stopped moving physically
+            yield return new WaitForSeconds(0.3f);
+
+            // Get all tower transforms from the GameController
+            var towers = controller.GetTowerTransforms();
+            if (towers == null || towers.Count == 0)
             {
-                // fuori da tutte le torri → reset posizione
-                RespawnToInitialPosition();
+                Debug.LogWarning("[DiskView] No tower references found.");
+                ResetToInitialPosition();
+                yield break;
             }
+
+            // Find the closest tower based on horizontal (X) distance
+            Transform closestTower = towers
+                .OrderBy(t => Mathf.Abs(t.position.x - transform.position.x))
+                .First();
+
+            // Get the index (0, 1, or 2) of that closest tower
+            int targetIndex = towers.IndexOf(closestTower);
+
+            // Debug log to verify which tower is detected
+            Debug.Log($"[DiskView] Closest tower = {closestTower.name} (index {targetIndex})");
+
+            // If the disk is too far away from any tower, reset its position
+            float dist = Mathf.Abs(closestTower.position.x - transform.position.x);
+            if (dist > 1.5f)
+            {
+                Debug.Log("[DiskView] Disk landed too far from any tower → resetting.");
+                ResetToInitialPosition();
+                yield break;
+            }
+
+            // Inform the controller that this disk has moved to a new tower
+            controller.MoveDiskToTower(this, targetIndex);
+
+            // Compute new Y position based on how many disks are already on that tower
+            float stackHeight = towers[targetIndex].position.y
+                                + 0.3f * (controller.GetGameModel().Towers[targetIndex].Count);
+
+            // Build the final position (same X and Z as the tower)
+            Vector3 finalPos = new Vector3(
+                closestTower.position.x,
+                stackHeight,
+                closestTower.position.z
+            );
+
+            // Instantly move the disk to its final resting position
+            transform.position = finalPos;
+
+            // Save this position as the new "base" position
+            initialPosition = transform.position;
         }
 
-        private void RespawnToInitialPosition()
+        private IEnumerator RespawnSmooth(Vector3 targetPos, float duration)
         {
-            rb.isKinematic = true;
-            rb.useGravity = false;
+            // temporarily disable physics while moving back
+            if (rb != null)
+            {
+                rb.isKinematic = true;
+                rb.useGravity = false;
+            }
 
-            StartCoroutine(SmoothMove(initialPosition, 0.4f));
-        }
-
-        private IEnumerator SmoothMove(Vector3 targetPos, float duration)
-        {
             Vector3 start = transform.position;
             float t = 0f;
-
             while (t < 1f)
             {
                 t += Time.deltaTime / duration;
@@ -202,13 +271,14 @@ namespace Hanoi.View
                 yield return null;
             }
 
-            rb.isKinematic = false;
-            rb.useGravity = true;
+            if (rb != null)
+            {
+                rb.isKinematic = false;
+                rb.useGravity = true;
+            }
         }
 
-        // --------------------------------------------------------------------
-        // ACCESSORS
-        // --------------------------------------------------------------------
+        // accessor
         public DiskModel GetModel() => model;
     }
 }
