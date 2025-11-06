@@ -1,138 +1,214 @@
 ﻿using UnityEngine;
 using Hanoi.Model;
+using Hanoi.Controller;
+using System.Collections;
 
 namespace Hanoi.View
 {
     /// <summary>
-    /// Handles the visual and interactive behavior of a disk in the Unity scene.
-    /// Each DiskView is linked to a DiskModel that stores its logical state.
+    /// Handles selection, dragging and dropping of a disk.
+    /// Includes outline color feedback and respawn logic if dropped outside towers.
     /// </summary>
-    [RequireComponent(typeof(Renderer))] /// Mandatory for unity 
+    [RequireComponent(typeof(Collider))]
+    [RequireComponent(typeof(Rigidbody))]
     public class DiskView : MonoBehaviour
     {
-        // Reference to the logical data model for this disk
         private DiskModel model;
-
-        // Reference to the main game controller
         private GameController controller;
 
-        // Material used for color and hover outline
-        private Material diskMaterial;
+        private Rigidbody rb;
+        private Renderer rend;
+        private Material baseMaterial;
+        [SerializeField] private Material outlineMaterial;
 
-        // Whether this disk is currently being dragged
-        private bool isDragging = false;
+        // --- Dragging ---
+        private bool isHeld = false;
+        private Camera mainCamera;
+        private float liftHeight = 2.0f;
+        private float followSpeed = 12f;
 
-        // Height offset when the disk is being dragged
-        [SerializeField] private float dragHeight = 1.5f;
+        // --- Shape ---
+        [SerializeField] private float baseThickness = 1.0f;
+        [SerializeField] private float minRadius = 1.0f;
+        [SerializeField] private float maxRadius = 1.8f;
 
-        // Original Y position when not dragging
-        private float baseHeight;
-
-        // Initial x/y/z position of the disk
+        // --- Respawn ---
         private Vector3 initialPosition;
-
-
-        // Colors for hover / default
-        private Color defaultColor;
-        [SerializeField] private Color hoverColor = Color.black;
+        private bool landedOnTower = false;
 
         private void Awake()
         {
-            // Get the Renderer from the torus mesh inside the disk prefab
-            diskMaterial = GetComponentInChildren<Renderer>().material;
+            rb = GetComponent<Rigidbody>();
+            rend = GetComponentInChildren<Renderer>();
+            baseMaterial = rend.material;
+            mainCamera = Camera.main;
 
-            // Save the default color of the material
-            defaultColor = diskMaterial.color;
-
-            // Save initial height
-            baseHeight = transform.position.y;
+            // Rigidbody setup
+            rb.useGravity = true;
+            rb.isKinematic = false;
+            rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
         }
 
-        /// <summary>
-        /// Links this visual object with its logical model and the game controller.
-        /// </summary>
         public void Initialize(DiskModel diskModel, GameController gameController)
         {
             model = diskModel;
             controller = gameController;
 
-            // Scale disk based on its logical size (larger size → larger radius)
-            float scaleFactor = 0.3f + 0.1f * model.Size;
-            transform.localScale = new Vector3(scaleFactor, 0.3f, scaleFactor);
+            int total = controller.GetGameModel().DiskCount;
+            float t = (total > 1) ? (model.Size - 1) / (float)(total - 1) : 0f;
 
-            // Assign a random color for visual variety
+            float radius = Mathf.Lerp(minRadius, maxRadius, t);
+            transform.localScale = new Vector3(radius, baseThickness, radius);
+
+            // Random color
             Color randomColor = new Color(
-                UnityEngine.Random.Range(0.2f, 1f),
-                UnityEngine.Random.Range(0.2f, 1f),
-                UnityEngine.Random.Range(0.2f, 1f)
+                Random.Range(0.3f, 1f),
+                Random.Range(0.3f, 1f),
+                Random.Range(0.3f, 1f)
             );
-            diskMaterial.color = randomColor;
-            defaultColor = randomColor;
+            baseMaterial.color = randomColor;
+
             initialPosition = transform.position;
         }
 
-
-        /// <summary>
-        /// Returns the disk to its original starting position.
-        /// Used when it’s dropped outside a valid tower.
-        /// </summary>
-        public void ResetToInitialPosition()
+        // --------------------------------------------------------------------
+        // OUTLINE LOGIC
+        // --------------------------------------------------------------------
+        public void ShowOutline(Color color)
         {
-            transform.position = initialPosition;
+            if (rend == null || outlineMaterial == null) return;
+            outlineMaterial.color = color;
+            rend.material = outlineMaterial;
         }
 
+        public void HideOutline()
+        {
+            if (rend == null || baseMaterial == null) return;
+            rend.material = baseMaterial;
+        }
 
         private void OnMouseEnter()
         {
-            // When mouse hovers, highlight the disk
-            diskMaterial.color = hoverColor;
+            if (controller == null) return;
+
+            bool canPick = controller.CanSelectDisk(this);
+            if (canPick)
+                ShowOutline(Color.green); // in cima → verde
+            else
+                ShowOutline(Color.red);   // non in cima → rosso
         }
 
         private void OnMouseExit()
         {
-            // Reset to the default color
-            diskMaterial.color = defaultColor;
+            HideOutline();
         }
 
+        // --------------------------------------------------------------------
+        // DRAG + DROP LOGIC
+        // --------------------------------------------------------------------
         private void OnMouseDown()
         {
-            // Notify the game controller that this disk has been clicked
+            if (controller == null) return;
+            if (!controller.CanSelectDisk(this)) return;
+
             controller.OnDiskSelected(this);
+
+            isHeld = true;
+            rb.useGravity = false;
+            rb.isKinematic = true;
+            landedOnTower = false;
+
+            ShowOutline(Color.yellow); // selezionato
         }
 
-        /// <summary>
-        /// Instantly set the position of the disk.
-        /// </summary>
-        public void SetPosition(Vector3 targetPosition)
+        private void OnMouseUp()
         {
-            transform.position = targetPosition;
+            if (!isHeld) return;
+
+            isHeld = false;
+            rb.isKinematic = false;
+            rb.useGravity = true;
+
+            HideOutline();
+
+            // Avvia la verifica del posizionamento dopo la caduta
+            StartCoroutine(CheckLandingAfterDelay());
         }
 
-        /// <summary>
-        /// Smoothly move the disk toward a new position (used for animation).
-        /// </summary>
-        public void MoveTo(Vector3 newPos)
+        private void Update()
         {
-            StopAllCoroutines();
-            StartCoroutine(SmoothMove(newPos));
+            if (isHeld)
+                FollowMouse();
         }
 
-        private System.Collections.IEnumerator SmoothMove(Vector3 target)
+        private void FollowMouse()
         {
-            Vector3 start = transform.position;
-            float t = 0f;
-            while (t < 1f)
+            if (mainCamera == null) return;
+
+            Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out RaycastHit hit, 100f))
             {
-                t += Time.deltaTime * 3f; // speed
-                transform.position = Vector3.Lerp(start, target, t);
-                yield return null;
+                Vector3 targetPos = hit.point;
+                targetPos.y += liftHeight;
+                transform.position = Vector3.Lerp(transform.position, targetPos, Time.deltaTime * followSpeed);
             }
         }
 
-        // Returns the logical model associated with this visual disk
-        public DiskModel GetModel()
+        // --------------------------------------------------------------------
+        // LANDING + RESPAWN LOGIC
+        // --------------------------------------------------------------------
+        private IEnumerator CheckLandingAfterDelay()
         {
-            return model;
+            // aspetta mezzo secondo per permettere alla fisica di fermarsi
+            yield return new WaitForSeconds(0.5f);
+
+            // controlla se è sopra una torre
+            landedOnTower = false;
+            foreach (Transform tower in controller.GetTowerTransforms())
+            {
+                float distance = Vector3.Distance(new Vector3(transform.position.x, 0, transform.position.z),
+                                                  new Vector3(tower.position.x, 0, tower.position.z));
+                if (distance < 1.5f) // distanza accettabile per considerare la torre "centrata"
+                {
+                    landedOnTower = true;
+                    break;
+                }
+            }
+
+            if (!landedOnTower)
+            {
+                // fuori da tutte le torri → reset posizione
+                RespawnToInitialPosition();
+            }
         }
+
+        private void RespawnToInitialPosition()
+        {
+            rb.isKinematic = true;
+            rb.useGravity = false;
+
+            StartCoroutine(SmoothMove(initialPosition, 0.4f));
+        }
+
+        private IEnumerator SmoothMove(Vector3 targetPos, float duration)
+        {
+            Vector3 start = transform.position;
+            float t = 0f;
+
+            while (t < 1f)
+            {
+                t += Time.deltaTime / duration;
+                transform.position = Vector3.Lerp(start, targetPos, t);
+                yield return null;
+            }
+
+            rb.isKinematic = false;
+            rb.useGravity = true;
+        }
+
+        // --------------------------------------------------------------------
+        // ACCESSORS
+        // --------------------------------------------------------------------
+        public DiskModel GetModel() => model;
     }
 }
