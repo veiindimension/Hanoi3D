@@ -235,6 +235,23 @@ namespace Hanoi.View
         }
 
         /// <summary>
+        /// Moves the disk back to its original position on Tower 0.
+        /// </summary>
+        public void ResetToOrigin()
+        {
+            // Reset the disk to its original position on Tower 0
+            transform.position = controller.GetTowerTransforms()[0].position;
+
+            if (rb != null)
+            {
+                rb.linearVelocity = Vector3.zero;
+                rb.angularVelocity = Vector3.zero;
+            }
+
+            Debug.Log("[DiskView] Disk reset to original position on Tower 0.");
+        }
+
+        /// <summary>
         /// Waits briefly for physics to settle, then checks which tower the disk landed on.
         /// Updates the logical model accordingly or resets position if invalid.
         /// </summary>
@@ -266,6 +283,24 @@ namespace Hanoi.View
                 yield break;
             }
 
+            TowerModel targetTower = controller.GetGameModel().Towers[targetIndex];
+            DiskModel targetTopDisk = targetTower.Peek();
+            if (targetTopDisk != null && model.Size > targetTopDisk.Size)
+            {
+                Debug.LogWarning($"[DiskView] Cannot place Disk {model.Size} on top of Disk {targetTopDisk.Size} in Tower {targetIndex}. Returning to initial position.");
+                // Check if the initial position was Tower 0
+                if (model.TowerIndex == 0)
+                {
+                    ResetToOrigin(); // Send the disk back to Tower 0
+                }
+                else
+                {
+                    ResetToInitialPosition(); // Send the disk back to its initial position
+                }
+                yield break;
+            }
+
+            // Update the logical model before updating the position
             controller.MoveDiskToTower(this, targetIndex);
 
             float stackHeight = towers[targetIndex].position.y
@@ -278,7 +313,12 @@ namespace Hanoi.View
             );
 
             transform.position = finalPos;
+
+            // Update initial position only after successful placement
             initialPosition = transform.position;
+
+            // Update the disk's TowerIndex to reflect its new position
+            model.TowerIndex = targetIndex;
         }
 
         // ==========================================================
