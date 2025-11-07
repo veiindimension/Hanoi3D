@@ -1009,7 +1009,7 @@ MonoBehaviour:
   towerB: {fileID: 1469607543}
   towerC: {fileID: 1991611970}
   diskPrefab: {fileID: 6280524699770620334, guid: 6062fd85bb3a6f143b414a7561b28487, type: 3}
-  diskCount: 5
+  diskCount: 4
   diskVerticalGap: 0.001
   spawnDisksOrdered: 1
   movesCounterText: {fileID: 515568405}
