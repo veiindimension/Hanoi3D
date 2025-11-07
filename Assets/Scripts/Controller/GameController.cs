@@ -1,9 +1,6 @@
 ﻿// 07/11/2025 AI-Tag
 // This was created with the help of Assistant, a Unity Artificial Intelligence product.
 
-// 07/11/2025 AI-Tag
-// Questo script è stato creato con l'aiuto di Assistant, un prodotto di Intelligenza Artificiale di Unity.
-
 using System.Collections.Generic;
 using UnityEngine;
 using Hanoi.Model;
@@ -13,48 +10,48 @@ using System.Linq;
 namespace Hanoi.Controller
 {
     /// <summary>
-    /// Gestore centrale che controlla la logica e gestisce l'input del mouse (basato su raycast).
+    /// Central manager that controls the game logic and handles mouse input (raycast-based).
     /// </summary>
     public class GameController : MonoBehaviour
     {
-        [Header("Riferimenti della scena (assegnare nell'Inspector)")]
-        [Tooltip("Trascina qui il Transform di TowerA")]
+        [Header("Scene References (assign in Inspector)")]
+        [Tooltip("Drag the Transform of TowerA here")]
         [SerializeField] private Transform towerA;
-        [Tooltip("Trascina qui il Transform di TowerB")]
+        [Tooltip("Drag the Transform of TowerB here")]
         [SerializeField] private Transform towerB;
-        [Tooltip("Trascina qui il Transform di TowerC")]
+        [Tooltip("Drag the Transform of TowerC here")]
         [SerializeField] private Transform towerC;
 
-        [Tooltip("Prefab del disco (assegnare il prefab con il componente DiskView)")]
+        [Tooltip("Disk prefab (assign prefab with DiskView component)")]
         [SerializeField] private GameObject diskPrefab;
 
-        [Header("Impostazioni")]
+        [Header("Settings")]
         [SerializeField, Range(3, 10)] private int diskCount = 4;
         [SerializeField] private float diskVerticalGap = 0.02f;
-        [Tooltip("Se vero, i dischi verranno generati in ordine sulla prima torre.")]
+        [Tooltip("If true, disks will be spawned in order on the first tower.")]
         [SerializeField] private bool spawnDisksOrdered = true;
 
-        // Modello logico
+        // Logical model
         private GameModel gameModel;
         private List<Transform> towerTransforms = new List<Transform>();
 
-        // Stato di input/selezione
+        // Input/selection state
         private DiskView hoveredDisk = null;
         private DiskView selectedDisk = null;
 
-        // Cache della camera
+        // Camera cache
         private Camera mainCamera;
 
         private void Awake()
         {
             mainCamera = Camera.main;
             if (mainCamera == null)
-                Debug.LogError("[GameController] Camera.main è null. Assicurati che la tua camera abbia il tag 'MainCamera'.");
+                Debug.LogError("[GameController] Camera.main is null. Make sure your camera has the 'MainCamera' tag.");
 
             if (towerA == null || towerB == null || towerC == null)
-                Debug.LogWarning("[GameController] Uno o più riferimenti alle torri non sono assegnati nell'Inspector.");
+                Debug.LogWarning("[GameController] One or more tower references are not assigned in the Inspector.");
             if (diskPrefab == null)
-                Debug.LogWarning("[GameController] Prefab del disco non assegnato nell'Inspector.");
+                Debug.LogWarning("[GameController] Disk prefab not assigned in the Inspector.");
         }
 
         private void Start()
@@ -101,7 +98,7 @@ namespace Hanoi.Controller
                 DiskView view = newDisk.GetComponent<DiskView>();
                 if (view == null)
                 {
-                    Debug.LogError("[GameController] Il prefab del disco manca del componente DiskView.");
+                    Debug.LogError("[GameController] Disk prefab is missing the DiskView component.");
                     continue;
                 }
 
@@ -118,7 +115,7 @@ namespace Hanoi.Controller
                 firstTower.Push(diskModel);
             }
 
-            Debug.Log("[GameController] Generati " + disks.Count + " dischi sulla Torre 0.");
+            Debug.Log("[GameController] Spawned " + disks.Count + " disks on Tower 0.");
         }
 
         private void Update()
@@ -128,7 +125,7 @@ namespace Hanoi.Controller
 
             if (gameModel.IsGameComplete())
             {
-                Debug.Log($"[GameController] Vittoria! Tutti i dischi sono impilati in ordine sulla terza torre in {gameModel.MoveCount} mosse.");
+                Debug.Log($"[GameController] Victory! All disks are stacked in order on the third tower in {gameModel.MoveCount} moves.");
                 ShowVictoryScreen();
             }
         }
@@ -137,6 +134,7 @@ namespace Hanoi.Controller
         {
             if (mainCamera == null) return;
 
+            // Cast a ray from the mouse position on the screen
             Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out RaycastHit hit, 100f))
             {
@@ -167,6 +165,7 @@ namespace Hanoi.Controller
 
         private void HandleMouseClickRelease()
         {
+            // When left mouse button is pressed
             if (Input.GetMouseButtonDown(0))
             {
                 if (hoveredDisk != null)
@@ -175,21 +174,22 @@ namespace Hanoi.Controller
                     {
                         selectedDisk = hoveredDisk;
                         selectedDisk.OnPick();
-                        Debug.Log("[GameController] Disco selezionato: " + selectedDisk.GetModel().Size);
+                        Debug.Log("[GameController] Disk selected: " + selectedDisk.GetModel().Size);
                     }
                     else
                     {
-                        Debug.Log("[GameController] Disco non selezionabile (non è in cima).");
+                        Debug.Log("[GameController] Disk cannot be selected (it's not on top).");
                     }
                 }
             }
 
+            // When left mouse button is released
             if (Input.GetMouseButtonUp(0))
             {
                 if (selectedDisk != null)
                 {
                     selectedDisk.OnRelease();
-                    Debug.Log("[GameController] Disco rilasciato: " + selectedDisk.GetModel().Size);
+                    Debug.Log("[GameController] Disk released: " + selectedDisk.GetModel().Size);
                     selectedDisk = null;
                 }
             }
@@ -228,15 +228,15 @@ namespace Hanoi.Controller
             DiskModel topDisk = fromTower.Peek();
             if (topDisk != model)
             {
-                Debug.LogWarning($"[GameController] Tentativo di spostare un disco non in cima dalla Torre {fromIndex}");
+                Debug.LogWarning($"[GameController] Attempted to move a disk that's not on top of Tower {fromIndex}");
                 return;
             }
 
             DiskModel targetTopDisk = toTower.Peek();
             if (targetTopDisk != null && model.Size > targetTopDisk.Size)
             {
-                Debug.LogWarning($"[GameController] Non è possibile posizionare il disco {model.Size} sopra il disco {targetTopDisk.Size} nella Torre {targetTowerIndex}. Ritorno alla posizione iniziale.");
-                disk.ResetToInitialPosition();
+                Debug.LogWarning($"[GameController] Cannot place disk {model.Size} on top of disk {targetTopDisk.Size} in Tower {targetTowerIndex}. Returning to initial position.");
+                disk.ResetToOrigin();
                 return;
             }
 
@@ -244,12 +244,12 @@ namespace Hanoi.Controller
             toTower.Push(model);
             model.TowerIndex = targetTowerIndex;
 
-            Debug.Log($"[GameController] Disco {model.Size} spostato dalla Torre {fromIndex} → Torre {targetTowerIndex}");
+            Debug.Log($"[GameController] Disk {model.Size} moved from Tower {fromIndex} → Tower {targetTowerIndex}");
         }
 
         private void ShowVictoryScreen()
         {
-            Debug.Log($"[GameController] Vittoria! Tutti i dischi sono impilati in ordine sulla terza torre in {gameModel.MoveCount} mosse.");
+            Debug.Log($"[GameController] Victory! All disks are stacked in order on the third tower in {gameModel.MoveCount} moves.");
         }
     }
 }
