@@ -6,6 +6,8 @@ using UnityEngine;
 using Hanoi.Model;
 using Hanoi.View;
 using System.Linq;
+using UnityEngine.UI;
+using TMPro;
 
 namespace Hanoi.Controller
 {
@@ -30,6 +32,9 @@ namespace Hanoi.Controller
         [SerializeField] private float diskVerticalGap = 0.02f;
         [Tooltip("If true, disks will be spawned in order on the first tower.")]
         [SerializeField] private bool spawnDisksOrdered = true;
+
+        [Header("UI References")]
+        [SerializeField] private TextMeshProUGUI movesCounterText; //Refers to the text of the UI
 
         // Logical model
         private GameModel gameModel;
@@ -70,6 +75,7 @@ namespace Hanoi.Controller
             towerTransforms.Add(towerC);
 
             SpawnDisks();
+            UpdateMoveCountUI();
         }
 
         private void SpawnDisks()
@@ -244,7 +250,19 @@ namespace Hanoi.Controller
             toTower.Push(model);
             model.TowerIndex = targetTowerIndex;
 
+            //gameModel.MoveDisk(fromIndex, targetTowerIndex);
+
+            UpdateMoveCountUI(); // Update UI for the move counter
+
             Debug.Log($"[GameController] Disk {model.Size} moved from Tower {fromIndex} → Tower {targetTowerIndex}");
+        }
+
+        public void UpdateMoveCountUI()
+        {
+            if (movesCounterText != null)
+            {
+                movesCounterText.text = $"Moves: {gameModel.MoveCount}";
+            }
         }
 
         private void ShowVictoryScreen()

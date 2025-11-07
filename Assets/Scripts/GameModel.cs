@@ -58,6 +58,12 @@ namespace Hanoi.Model
             MoveCount++;
         }
 
+
+        public void IncrementMoveCount()
+        {
+            MoveCount++;
+        }
+
         /// <summary>
         /// Checks if the game is finished (all disks moved to the last tower in order).
         /// </summary>

@@ -178,6 +178,11 @@ namespace Hanoi.View
 
             // Evaluate landing position
             StartCoroutine(CheckLandingAfterDelay());
+
+
+
+
+
         }
 
         // ==========================================================
@@ -251,6 +256,34 @@ namespace Hanoi.View
             Debug.Log("[DiskView] Disk reset to original position on Tower 0.");
         }
 
+        public void ResetToOrigin1()
+        {
+            // Reset the disk to its original position on Tower 1
+            transform.position = controller.GetTowerTransforms()[1].position;
+
+            if (rb != null)
+            {
+                rb.linearVelocity = Vector3.zero;
+                rb.angularVelocity = Vector3.zero;
+            }
+
+            Debug.Log("[DiskView] Disk reset to original position on Tower 1.");
+        }
+
+        public void ResetToOrigin2()
+        {
+            // Reset the disk to its original position on Tower 2
+            transform.position = controller.GetTowerTransforms()[2].position;
+
+            if (rb != null)
+            {
+                rb.linearVelocity = Vector3.zero;
+                rb.angularVelocity = Vector3.zero;
+            }
+
+            Debug.Log("[DiskView] Disk reset to original position on Tower 2.");
+        }
+
         /// <summary>
         /// Waits briefly for physics to settle, then checks which tower the disk landed on.
         /// Updates the logical model accordingly or resets position if invalid.
@@ -293,15 +326,21 @@ namespace Hanoi.View
                 {
                     ResetToOrigin(); // Send the disk back to Tower 0
                 }
-                else
+                if (model.TowerIndex == 1)
                 {
-                    ResetToInitialPosition(); // Send the disk back to its initial position
+                    ResetToOrigin1(); // Send the disk back to its initial position
+                }
+                if (model.TowerIndex == 2)
+                {
+                    ResetToOrigin2(); // Send the disk back to its initial position
                 }
                 yield break;
             }
 
             // Update the logical model before updating the position
             controller.MoveDiskToTower(this, targetIndex);
+            controller.GetGameModel().IncrementMoveCount();
+            controller.UpdateMoveCountUI();
 
             float stackHeight = towers[targetIndex].position.y
                                 + 0.3f * (controller.GetGameModel().Towers[targetIndex].Count);
