@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿// 07/11/2025 AI-Tag
+// This was created with the help of Assistant, a Unity Artificial Intelligence product.
+
+using UnityEngine;
 using Hanoi.Model;
 using Hanoi.Controller;
 using System.Collections;
@@ -7,8 +10,9 @@ using System.Linq;
 namespace Hanoi.View
 {
     /// <summary>
-    /// DiskView: visual + physics behaviour.
-    /// Methods OnHoverEnter/Exit/OnPick/OnRelease are called by GameController (raycast input).
+    /// DiskView handles the physics, drag interaction, and visual feedback
+    /// for each disk. 
+    /// Includes elastic spring movement and outline feedback (green/red/yellow).
     /// </summary>
     [RequireComponent(typeof(Collider))]
     [RequireComponent(typeof(Rigidbody))]
@@ -22,38 +26,57 @@ namespace Hanoi.View
         private Material baseMaterial;
         [SerializeField] private Material outlineMaterial; // assign M_Outline in prefab
 
-        // drag physics
+        // Combined materials (base + outline)
+        private Material[] combinedMaterials;
+        private Color outlineColor = Color.green;
+
+        // Drag physics state
         private bool isHeld = false;
         private Camera mainCamera;
-        [SerializeField] private float liftHeight = 2.0f;
-        [SerializeField] private float followSpeed = 12f;
 
-        // visual params (set in inspector or keep defaults)
+        // Elastic spring parameters
+        [Header("Elastic Drag Settings")]
+        [SerializeField] private float springStrength = 60f;  // pull strength toward mouse
+        [SerializeField] private float springDamping = 10f;   // damping to reduce oscillation
+        [SerializeField] private float dragPlaneZOffset = 0f; // optional plane offset
+
+        // Disk geometry parameters
+        [Header("Disk Shape Settings")]
         [SerializeField] private float baseThickness = 1.0f;
         [SerializeField] private float minRadius = 1.0f;
         [SerializeField] private float maxRadius = 1.8f;
 
-        // respawn
+        // Respawn position
         private Vector3 initialPosition;
 
         private void Awake()
         {
             rb = GetComponent<Rigidbody>();
             rend = GetComponentInChildren<Renderer>();
-            if (rend == null) Debug.LogError("[DiskView] Renderer not found in children.");
+
+            if (rend == null)
+                Debug.LogError("[DiskView] Renderer not found in children.");
+
             baseMaterial = (rend != null) ? rend.material : null;
             mainCamera = Camera.main;
-            if (mainCamera == null) Debug.LogError("[DiskView] Camera.main is null. Tag your camera 'MainCamera'.");
 
-            // ensure RB settings are reasonable
+            if (mainCamera == null)
+                Debug.LogError("[DiskView] Camera.main is null. Tag your camera 'MainCamera'.");
+
+            // Rigidbody configuration
             if (rb != null)
             {
                 rb.useGravity = true;
                 rb.isKinematic = false;
                 rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+                rb.linearDamping = 1f;
+                rb.angularDamping = 0.1f;
             }
         }
 
+        /// <summary>
+        /// Initializes disk logic, appearance, and scaling based on its model.
+        /// </summary>
         public void Initialize(DiskModel diskModel, GameController gameController)
         {
             model = diskModel;
@@ -63,51 +86,63 @@ namespace Hanoi.View
             if (controller != null && controller.GetGameModel() != null)
                 total = controller.GetGameModel().DiskCount;
 
+            // Scale radius proportionally to logical size
             float t = (total > 1) ? (model.Size - 1) / (float)(total - 1) : 0f;
             float radius = Mathf.Lerp(minRadius, maxRadius, t);
             transform.localScale = new Vector3(radius, baseThickness, radius);
 
-            // random color for base material
+            // Set up materials
+            if (rend != null)
+            {
+                baseMaterial = rend.material;
+                if (outlineMaterial != null)
+                {
+                    combinedMaterials = new Material[] { baseMaterial, outlineMaterial };
+                }
+            }
+
+            // Randomize base color (visual variety)
             if (baseMaterial != null)
             {
                 Color randomColor = new Color(Random.Range(0.3f, 1f), Random.Range(0.3f, 1f), Random.Range(0.3f, 1f));
                 baseMaterial.color = randomColor;
             }
 
-            // store initial pos (spawned position)
             initialPosition = transform.position;
         }
 
-        // ---------- Called by controller when raycast hits this disk ----------
+        // ==========================================================
+        //  HOVER VISUAL FEEDBACK
+        // ==========================================================
+
         public void OnHoverEnter(bool canPick)
         {
-            if (rend == null) return;
-            if (outlineMaterial == null)
-            {
-                // fallback: tint base material slightly
-                if (baseMaterial != null)
-                    baseMaterial.color = canPick ? Color.green : Color.red;
-                return;
-            }
+            if (rend == null || outlineMaterial == null) return;
 
-            // set outline material color and apply
-            outlineMaterial.color = canPick ? Color.green : Color.red;
-            rend.material = outlineMaterial;
+            // Choose outline color based on availability to pick
+            outlineColor = canPick ? Color.green : Color.red;
+            outlineMaterial.SetColor("_outline_color", outlineColor);
+
+            // Combine materials: base + outline
+            rend.materials = combinedMaterials;
         }
 
         public void OnHoverExit()
         {
-            if (rend == null) return;
-            if (baseMaterial != null)
-                rend.material = baseMaterial;
+            if (rend == null || baseMaterial == null) return;
+
+            // Restore base material only
+            rend.materials = new Material[] { baseMaterial };
         }
 
-        // ---------- Pick up / release called by controller ----------
+        // ==========================================================
+        //  PICK UP / RELEASE INTERACTION
+        // ==========================================================
+
         public void OnPick()
         {
             if (rb == null) return;
 
-            // only allow pick if controller says so (extra safety)
             if (controller != null && !controller.CanSelectDisk(this))
             {
                 Debug.Log("[DiskView] OnPick called but disk not selectable.");
@@ -115,14 +150,15 @@ namespace Hanoi.View
             }
 
             isHeld = true;
-            rb.useGravity = false;
-            rb.isKinematic = true;
 
-            // visual feedback: yellow outline if possible
+            // Adjust drag for smoother control
+            rb.linearDamping = 8f;
+            rb.angularDamping = 8f;
+
+            // Remove outline while held
             if (outlineMaterial != null)
             {
-                outlineMaterial.color = Color.yellow;
-                rend.material = outlineMaterial;
+                rend.materials = new Material[] { baseMaterial };
             }
         }
 
@@ -131,57 +167,64 @@ namespace Hanoi.View
             if (rb == null) return;
 
             isHeld = false;
-            rb.isKinematic = false;
-            rb.useGravity = true;
 
-            // restore material immediately (or wait)
+            // Reset damping
+            rb.linearDamping = 1f;
+            rb.angularDamping = 0.1f;
+
+            // Remove outline → restore base
             if (baseMaterial != null)
-                rend.material = baseMaterial;
+                rend.materials = new Material[] { baseMaterial };
 
-            // after a short delay, check landing
+            // Evaluate landing position
             StartCoroutine(CheckLandingAfterDelay());
         }
 
-        private void Update()
+        // ==========================================================
+        //  PHYSICS-BASED MOUSE FOLLOW (ELASTIC)
+        // ==========================================================
+
+        private void FixedUpdate()
         {
             if (isHeld)
-                FollowMouse();
-        }
-
-        private void FollowMouse()
-        {
-            if (mainCamera == null) return;
-
-            // Read current mouse position (in screen coordinates)
-            Vector3 mousePos = Input.mousePosition;
-
-            // Add a fixed depth value so we can convert it to a world position.
-            // This depth should roughly match the Z distance of the disk from the camera.
-            // The larger this value, the further away the "drag plane" is.
-            mousePos.z = Mathf.Abs(mainCamera.transform.position.z - transform.position.z);
-
-            // Convert screen position → world position
-            Vector3 target = mainCamera.ScreenToWorldPoint(mousePos);
-
-            // ✅ Lock movement to X and Y (let them move)
-            //    but keep the same Z value as the original disk (no depth movement)
-            target.z = transform.position.z;
-
-            // Smooth movement for a nice drag feeling
-            transform.position = Vector3.Lerp(transform.position, target, Time.deltaTime * followSpeed);
+                ApplyElasticFollow();
         }
 
         /// <summary>
-        /// Moves the disk back to its original starting position
-        /// (used when the player drops it outside of any valid tower area).
+        /// Applies a spring-like force that pulls the disk toward the mouse cursor.
+        /// Keeps movement restricted to X and Y axes (no depth movement).
+        /// </summary>
+        private void ApplyElasticFollow()
+        {
+            if (mainCamera == null || rb == null) return;
+
+            // Plane at the current Z depth of the disk
+            Plane movePlane = new Plane(Vector3.forward, new Vector3(0, 0, transform.position.z + dragPlaneZOffset));
+
+            Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+            if (movePlane.Raycast(ray, out float distance))
+            {
+                Vector3 worldPoint = ray.GetPoint(distance);
+                Vector3 targetPosition = new Vector3(worldPoint.x, worldPoint.y, transform.position.z);
+
+                // Calculate spring force and apply it
+                Vector3 direction = targetPosition - transform.position;
+                Vector3 force = (direction * springStrength) - (rb.linearVelocity * springDamping);
+                rb.AddForce(force, ForceMode.Acceleration);
+            }
+        }
+
+        // ==========================================================
+        //  POSITION RESET AND VALIDATION
+        // ==========================================================
+
+        /// <summary>
+        /// Moves the disk back to its initial position if dropped outside valid towers.
         /// </summary>
         public void ResetToInitialPosition()
         {
-            // Instantly move the disk back to where it started
             transform.position = initialPosition;
 
-            // Stop any residual motion if using physics
-            Rigidbody rb = GetComponent<Rigidbody>();
             if (rb != null)
             {
                 rb.linearVelocity = Vector3.zero;
@@ -191,19 +234,14 @@ namespace Hanoi.View
             Debug.Log("[DiskView] Disk reset to initial position.");
         }
 
-
-
         /// <summary>
-        /// After a short delay (to let physics settle), this method checks 
-        /// where the disk has landed and updates its logical tower accordingly.
-        /// If the disk is too far from any tower, it resets to its original position.
+        /// Waits briefly for physics to settle, then checks which tower the disk landed on.
+        /// Updates the logical model accordingly or resets position if invalid.
         /// </summary>
-        private System.Collections.IEnumerator CheckLandingAfterDelay()
+        private IEnumerator CheckLandingAfterDelay()
         {
-            // Wait a short time to ensure the disk has stopped moving physically
             yield return new WaitForSeconds(0.3f);
 
-            // Get all tower transforms from the GameController
             var towers = controller.GetTowerTransforms();
             if (towers == null || towers.Count == 0)
             {
@@ -212,18 +250,14 @@ namespace Hanoi.View
                 yield break;
             }
 
-            // Find the closest tower based on horizontal (X) distance
             Transform closestTower = towers
                 .OrderBy(t => Mathf.Abs(t.position.x - transform.position.x))
                 .First();
 
-            // Get the index (0, 1, or 2) of that closest tower
             int targetIndex = towers.IndexOf(closestTower);
 
-            // Debug log to verify which tower is detected
             Debug.Log($"[DiskView] Closest tower = {closestTower.name} (index {targetIndex})");
 
-            // If the disk is too far away from any tower, reset its position
             float dist = Mathf.Abs(closestTower.position.x - transform.position.x);
             if (dist > 1.5f)
             {
@@ -232,53 +266,24 @@ namespace Hanoi.View
                 yield break;
             }
 
-            // Inform the controller that this disk has moved to a new tower
             controller.MoveDiskToTower(this, targetIndex);
 
-            // Compute new Y position based on how many disks are already on that tower
             float stackHeight = towers[targetIndex].position.y
                                 + 0.3f * (controller.GetGameModel().Towers[targetIndex].Count);
 
-            // Build the final position (same X and Z as the tower)
             Vector3 finalPos = new Vector3(
                 closestTower.position.x,
                 stackHeight,
                 closestTower.position.z
             );
 
-            // Instantly move the disk to its final resting position
             transform.position = finalPos;
-
-            // Save this position as the new "base" position
             initialPosition = transform.position;
         }
 
-        private IEnumerator RespawnSmooth(Vector3 targetPos, float duration)
-        {
-            // temporarily disable physics while moving back
-            if (rb != null)
-            {
-                rb.isKinematic = true;
-                rb.useGravity = false;
-            }
-
-            Vector3 start = transform.position;
-            float t = 0f;
-            while (t < 1f)
-            {
-                t += Time.deltaTime / duration;
-                transform.position = Vector3.Lerp(start, targetPos, t);
-                yield return null;
-            }
-
-            if (rb != null)
-            {
-                rb.isKinematic = false;
-                rb.useGravity = true;
-            }
-        }
-
-        // accessor
+        // ==========================================================
+        //  ACCESSORS
+        // ==========================================================
         public DiskModel GetModel() => model;
     }
 }

@@ -9,6 +9,36 @@
     "C:\\Program Files\\Unity\\Hub\\Editor\\6000.2.2f1\\Editor\\Data\\Resources\\PackageManager\\BuiltInPackages\\BuiltInPackagesCombined.sha1"
   ],
   "outputs": {
+    "com.unity.ai.assistant@1.0.0-pre.12": {
+      "name": "com.unity.ai.assistant",
+      "displayName": "Assistant",
+      "resolvedPath": "F:\\MANU\\PROGETTI\\Unity Projects\\Hanoi3D\\Hanoi3DTEST\\Library\\PackageCache\\com.unity.ai.assistant@91c166a13c3b",
+      "fingerprint": "91c166a13c3bef5814c5a13a69fa442a657dd539",
+      "editorCompatibility": "6000.2.0b4",
+      "version": "1.0.0-pre.12",
+      "source": "registry",
+      "testable": false
+    },
+    "com.unity.ai.generators@1.0.0-pre.20": {
+      "name": "com.unity.ai.generators",
+      "displayName": "Generators",
+      "resolvedPath": "F:\\MANU\\PROGETTI\\Unity Projects\\Hanoi3D\\Hanoi3DTEST\\Library\\PackageCache\\com.unity.ai.generators@f55909672e13",
+      "fingerprint": "f55909672e13ba51e60efb6d0a788c594ddb1009",
+      "editorCompatibility": "6000.2.0a1",
+      "version": "1.0.0-pre.20",
+      "source": "registry",
+      "testable": false
+    },
+    "com.unity.ai.inference@2.4.1": {
+      "name": "com.unity.ai.inference",
+      "displayName": "Sentis",
+      "resolvedPath": "F:\\MANU\\PROGETTI\\Unity Projects\\Hanoi3D\\Hanoi3DTEST\\Library\\PackageCache\\com.unity.ai.inference@587873fd5e1b",
+      "fingerprint": "587873fd5e1bd2d10f696bceb1a83c296823e927",
+      "editorCompatibility": "6000.0.0a1",
+      "version": "2.4.1",
+      "source": "registry",
+      "testable": false
+    },
     "com.unity.collab-proxy@2.10.1": {
       "name": "com.unity.collab-proxy",
       "displayName": "Unity Version Control",
@@ -450,13 +480,13 @@
       "source": "registry",
       "testable": false
     },
-    "com.unity.mathematics@1.3.2": {
-      "name": "com.unity.mathematics",
-      "displayName": "Mathematics",
-      "resolvedPath": "F:\\MANU\\PROGETTI\\Unity Projects\\Hanoi3D\\Hanoi3DTEST\\Library\\PackageCache\\com.unity.mathematics@8017b507cc74",
-      "fingerprint": "8017b507cc74bf0a1dd14b18aa860569f807314d",
+    "com.unity.dt.app-ui@1.3.1": {
+      "name": "com.unity.dt.app-ui",
+      "displayName": "App UI",
+      "resolvedPath": "F:\\MANU\\PROGETTI\\Unity Projects\\Hanoi3D\\Hanoi3DTEST\\Library\\PackageCache\\com.unity.dt.app-ui@7b87c8225c06",
+      "fingerprint": "7b87c8225c066f90ed48f3fbee5375942c16f476",
       "editorCompatibility": "2021.3.0a1",
-      "version": "1.3.2",
+      "version": "1.3.1",
       "source": "registry",
       "testable": false
     },
@@ -467,6 +497,46 @@
       "fingerprint": "d49facba0036aa0e1508296262f9d93b44d1ab3b",
       "editorCompatibility": "2022.3.20f1",
       "version": "2.5.7",
+      "source": "registry",
+      "testable": false
+    },
+    "com.unity.nuget.newtonsoft-json@3.2.1": {
+      "name": "com.unity.nuget.newtonsoft-json",
+      "displayName": "Newtonsoft Json",
+      "resolvedPath": "F:\\MANU\\PROGETTI\\Unity Projects\\Hanoi3D\\Hanoi3DTEST\\Library\\PackageCache\\com.unity.nuget.newtonsoft-json@74deb55db2a0",
+      "fingerprint": "74deb55db2a0c29ddfda576608bcb86abbd13ee6",
+      "editorCompatibility": "2018.4.0a1",
+      "version": "3.2.1",
+      "source": "registry",
+      "testable": false
+    },
+    "com.unity.ai.toolkit@1.0.0-pre.20": {
+      "name": "com.unity.ai.toolkit",
+      "displayName": "AI Toolkit",
+      "resolvedPath": "F:\\MANU\\PROGETTI\\Unity Projects\\Hanoi3D\\Hanoi3DTEST\\Library\\PackageCache\\com.unity.ai.toolkit@48a271771d1a",
+      "fingerprint": "48a271771d1a565c2682042ac24762e303c85c66",
+      "editorCompatibility": "6000.2.0a1",
+      "version": "1.0.0-pre.20",
+      "source": "registry",
+      "testable": false
+    },
+    "com.unity.mathematics@1.3.2": {
+      "name": "com.unity.mathematics",
+      "displayName": "Mathematics",
+      "resolvedPath": "F:\\MANU\\PROGETTI\\Unity Projects\\Hanoi3D\\Hanoi3DTEST\\Library\\PackageCache\\com.unity.mathematics@8017b507cc74",
+      "fingerprint": "8017b507cc74bf0a1dd14b18aa860569f807314d",
+      "editorCompatibility": "2021.3.0a1",
+      "version": "1.3.2",
+      "source": "registry",
+      "testable": false
+    },
+    "com.unity.serialization@3.1.2": {
+      "name": "com.unity.serialization",
+      "displayName": "Serialization",
+      "resolvedPath": "F:\\MANU\\PROGETTI\\Unity Projects\\Hanoi3D\\Hanoi3DTEST\\Library\\PackageCache\\com.unity.serialization@582cbf30bbfd",
+      "fingerprint": "582cbf30bbfd3c90a738e49c2ad69eafd8803f1d",
+      "editorCompatibility": "2022.2.0a18",
+      "version": "3.1.2",
       "source": "registry",
       "testable": false
     },

@@ -273,8 +273,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DiskView
   outlineMaterial: {fileID: 2100000, guid: 9bf35ccb9d3cdd848b6ed6541c505d3b, type: 2}
-  liftHeight: 0
-  followSpeed: 10
+  springStrength: 60
+  springDamping: 10
+  dragPlaneZOffset: 0
   baseThickness: 1.25
   minRadius: 0.85
   maxRadius: 1.25

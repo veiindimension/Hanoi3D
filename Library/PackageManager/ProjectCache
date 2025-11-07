@@ -5,16 +5,16 @@ m_ProjectFiles:
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 638980311319665229
-    m_Hash: 2490531306
+      ticks: 638981048211061849
+    m_Hash: 480940110
   m_LockFileStatus:
     m_FilePath: F:/MANU/PROGETTI/Unity Projects/Hanoi3D/Hanoi3DTEST/Packages/packages-lock.json
     m_PathExists: 1
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 638980311319685245
-    m_Hash: 936865139
+      ticks: 638981048211262035
+    m_Hash: 3380352630
 m_EmbeddedPackageManifests:
   m_ManifestsStatus: {}
 m_LocalPackages:
@@ -22,6 +22,442 @@ m_LocalPackages:
 m_ProjectPath: F:/MANU/PROGETTI/Unity Projects/Hanoi3D/Hanoi3DTEST/Packages
 m_EditorVersion: 6000.2.2f1 (ea398eefe1c2)
 m_ResolvedPackages:
+- packageId: com.unity.ai.assistant@1.0.0-pre.12
+  testable: 0
+  isDirectDependency: 1
+  version: 1.0.0-pre.12
+  source: 1
+  resolvedPath: F:\MANU\PROGETTI\Unity Projects\Hanoi3D\Hanoi3DTEST\Library\PackageCache\com.unity.ai.assistant@91c166a13c3b
+  assetPath: Packages/com.unity.ai.assistant
+  name: com.unity.ai.assistant
+  displayName: Assistant
+  author:
+    name: 
+    email: 
+    url: 
+  category: 
+  type: 
+  description: 'Use AI for project-aware information retrieval, troubleshooting,
+    code generation, assistance, and scene editing.
+
+
+    Ask
+
+    Solve hard problems
+    or get ideas for your project. Assistant provides you with relevant answers based
+    on the context of your project.
+
+
+    Run
+
+    Automate actions in the Editor
+    to tackle repetitive tasks and streamline workflows. Use natural language to
+    scatter objects across terrain, adjust lighting, rename assets, restructure project
+    files, and more.
+
+
+    Code
+
+    Reduce the time and effort required to structure
+    gameplay mechanics by using Assistant to create pre-compiled scripts.'
+  errors: []
+  versions:
+    all:
+    - 1.0.0-pre.2
+    - 1.0.0-pre.3
+    - 1.0.0-pre.4
+    - 1.0.0-pre.5
+    - 1.0.0-pre.6
+    - 1.0.0-pre.7
+    - 1.0.0-pre.8
+    - 1.0.0-pre.9
+    - 1.0.0-pre.10
+    - 1.0.0-pre.11
+    - 1.0.0-pre.12
+    compatible:
+    - 1.0.0-pre.2
+    - 1.0.0-pre.3
+    - 1.0.0-pre.4
+    - 1.0.0-pre.5
+    - 1.0.0-pre.6
+    - 1.0.0-pre.7
+    - 1.0.0-pre.8
+    - 1.0.0-pre.9
+    - 1.0.0-pre.10
+    - 1.0.0-pre.11
+    - 1.0.0-pre.12
+    recommended: 1.0.0-pre.12
+    deprecated: []
+  dependencies:
+  - name: com.unity.ai.toolkit
+    version: 1.0.0-pre.18
+  - name: com.unity.serialization
+    version: 3.1.1
+  - name: com.unity.nuget.newtonsoft-json
+    version: 3.2.1
+  - name: com.unity.modules.unitywebrequest
+    version: 1.0.0
+  resolvedDependencies:
+  - name: com.unity.ai.toolkit
+    version: 1.0.0-pre.20
+  - name: com.unity.nuget.newtonsoft-json
+    version: 3.2.1
+  - name: com.unity.serialization
+    version: 3.1.2
+  - name: com.unity.burst
+    version: 1.8.24
+  - name: com.unity.mathematics
+    version: 1.3.2
+  - name: com.unity.modules.jsonserialize
+    version: 1.0.0
+  - name: com.unity.collections
+    version: 2.5.7
+  - name: com.unity.test-framework
+    version: 1.5.1
+  - name: com.unity.ext.nunit
+    version: 2.0.5
+  - name: com.unity.modules.imgui
+    version: 1.0.0
+  - name: com.unity.nuget.mono-cecil
+    version: 1.11.5
+  - name: com.unity.test-framework.performance
+    version: 3.1.0
+  - name: com.unity.modules.unitywebrequest
+    version: 1.0.0
+  keywords: []
+  registry:
+    id: main
+    name: 
+    url: https://packages.unity.com
+    scopes: []
+    isDefault: 1
+    capabilities: 7
+    configSource: 0
+    compliance:
+      status: 0
+      violations: []
+  hideInEditor: 1
+  entitlements:
+    licensingModel: 1
+  isAssetStorePackage: 0
+  datePublishedTicks: 638906224390580000
+  documentationUrl: https://docs.unity3d.com/Packages/com.unity.ai.assistant@1.0/manual/index.html
+  hasRepository: 1
+  repository:
+    type: git
+    url: https://github.cds.internal.unity3d.com/unity/muse-editor.git
+    revision: 81800939ecf2017f2b6b1afd61a107665d743008
+    path: 
+  unityLifecycle:
+    version: 
+    nextVersion: 1.0.0-pre.7
+    recommendedVersion: 1.0.0-pre.5
+    isDeprecated: 0
+    deprecationMessage: 
+    isDiscoverable: 1
+  isDeprecated: 0
+  deprecationMessage: 
+  git:
+    hash: 
+    revision: 
+  upmReserved: '{"changelog":"- Update AI-Toolkit to 1.0.0-pre.18"}'
+  assetStore:
+    productId: 
+  fingerprint: 91c166a13c3bef5814c5a13a69fa442a657dd539
+  editorCompatibility:
+    compatibilityLevel: 0
+    minimumPackageVersion: 1.0.0-pre.2
+    minimumUnityVersion: 6000.2.0b4
+  compliance:
+    status: 0
+    violation:
+      scopePatternExpression: 
+      message: 
+      readMoreLink: 
+- packageId: com.unity.ai.generators@1.0.0-pre.20
+  testable: 0
+  isDirectDependency: 1
+  version: 1.0.0-pre.20
+  source: 1
+  resolvedPath: F:\MANU\PROGETTI\Unity Projects\Hanoi3D\Hanoi3DTEST\Library\PackageCache\com.unity.ai.generators@f55909672e13
+  assetPath: Packages/com.unity.ai.generators
+  name: com.unity.ai.generators
+  displayName: Generators
+  author:
+    name: 
+    email: 
+    url: 
+  category: 
+  type: 
+  description: Unity AI Generators is a package that provides tools for adding generative
+    AI to Unity asset workflows.
+  errors: []
+  versions:
+    all:
+    - 1.0.0-pre.2
+    - 1.0.0-pre.3
+    - 1.0.0-pre.4
+    - 1.0.0-pre.5
+    - 1.0.0-pre.6
+    - 1.0.0-pre.7
+    - 1.0.0-pre.8
+    - 1.0.0-pre.9
+    - 1.0.0-pre.10
+    - 1.0.0-pre.11
+    - 1.0.0-pre.12
+    - 1.0.0-pre.13
+    - 1.0.0-pre.14
+    - 1.0.0-pre.15
+    - 1.0.0-pre.16
+    - 1.0.0-pre.17
+    - 1.0.0-pre.18
+    - 1.0.0-pre.19
+    - 1.0.0-pre.20
+    compatible:
+    - 1.0.0-pre.2
+    - 1.0.0-pre.3
+    - 1.0.0-pre.4
+    - 1.0.0-pre.5
+    - 1.0.0-pre.6
+    - 1.0.0-pre.7
+    - 1.0.0-pre.8
+    - 1.0.0-pre.9
+    - 1.0.0-pre.10
+    - 1.0.0-pre.11
+    - 1.0.0-pre.12
+    - 1.0.0-pre.13
+    - 1.0.0-pre.14
+    - 1.0.0-pre.15
+    - 1.0.0-pre.16
+    - 1.0.0-pre.17
+    - 1.0.0-pre.18
+    - 1.0.0-pre.19
+    - 1.0.0-pre.20
+    recommended: 1.0.0-pre.20
+    deprecated: []
+  dependencies:
+  - name: com.unity.ai.toolkit
+    version: 1.0.0-pre.20
+  - name: com.unity.mathematics
+    version: 1.3.2
+  - name: com.unity.nuget.newtonsoft-json
+    version: 3.2.1
+  resolvedDependencies:
+  - name: com.unity.ai.toolkit
+    version: 1.0.0-pre.20
+  - name: com.unity.nuget.newtonsoft-json
+    version: 3.2.1
+  - name: com.unity.mathematics
+    version: 1.3.2
+  keywords: []
+  registry:
+    id: main
+    name: 
+    url: https://packages.unity.com
+    scopes: []
+    isDefault: 1
+    capabilities: 7
+    configSource: 0
+    compliance:
+      status: 0
+      violations: []
+  hideInEditor: 1
+  entitlements:
+    licensingModel: 1
+  isAssetStorePackage: 0
+  datePublishedTicks: 638919866118910000
+  documentationUrl: https://docs.unity3d.com/Packages/com.unity.ai.generators@1.0/manual/index.html
+  hasRepository: 1
+  repository:
+    type: git
+    url: https://github.cds.internal.unity3d.com/unity/UnityAIWorkflows.git
+    revision: 84efef4741a539de4207f78fdb59d739e9878e2b
+    path: 
+  unityLifecycle:
+    version: 
+    nextVersion: 1.0.0-pre.8
+    recommendedVersion: 1.0.0-pre.8
+    isDeprecated: 0
+    deprecationMessage: 
+    isDiscoverable: 1
+  isDeprecated: 0
+  deprecationMessage: 
+  git:
+    hash: 
+    revision: 
+  upmReserved: '{"changelog":"### Added\n\n- Expanded image generation capabilities
+    to include BMP, GIF, TIFF, PSD, and HDR, in addition to existing support for
+    PNG, JPG, and EXR.\n- Added pattern search button and window to material generator.\n-
+    Added descriptive shader input label names to generated map material assignments.\n-
+    Added simple heuristic for message log feedback when a generation was likely
+    filtered by a content filter.\n\n### Changed\n\n- Allow partial completion and
+    recovery of generated assets.\n- Improve image preview quality with multi-step
+    blitting.\n- When no image model selected, automatically select favorited model,
+    typically Flux 1.dev.\n\n### Fixed\n\n- Generation download recovery waits until
+    connection is made on startup.\n- Searching generated assets is faster.\n- Remove
+    alpha when sending image references as models do not look at alpha channel.\n-
+    Fixed filters in model selector applying instantly to generator window.\n- Fixed
+    UI offset in Generation Data window.\n- Fixed missing map assignments when promoting
+    between generated material and terrain layer."}'
+  assetStore:
+    productId: 
+  fingerprint: f55909672e13ba51e60efb6d0a788c594ddb1009
+  editorCompatibility:
+    compatibilityLevel: 0
+    minimumPackageVersion: 1.0.0-pre.2
+    minimumUnityVersion: 6000.2.0a1
+  compliance:
+    status: 0
+    violation:
+      scopePatternExpression: 
+      message: 
+      readMoreLink: 
+- packageId: com.unity.ai.inference@2.4.1
+  testable: 0
+  isDirectDependency: 1
+  version: 2.4.1
+  source: 1
+  resolvedPath: F:\MANU\PROGETTI\Unity Projects\Hanoi3D\Hanoi3DTEST\Library\PackageCache\com.unity.ai.inference@587873fd5e1b
+  assetPath: Packages/com.unity.ai.inference
+  name: com.unity.ai.inference
+  displayName: Sentis
+  author:
+    name: 
+    email: 
+    url: 
+  category: 
+  type: 
+  description: 'Sentis is a neural network inference library. It enables you to import
+    trained neural network models, connect the network inputs and outputs to your
+    game code, and then run them locally in your end-user app. Use cases include
+    capabilities like natural language processing, object recognition, automated
+    game opponents, sensor data classification, and many more.
+
+
+    Sentis automatically
+    optimizes your network for real-time use to speed up inference. It also allows
+    you to tune your implementation further with tools like frame slicing, quantization,
+    and custom backend (i.e. compute type) dispatching.
+
+
+    Visit https://unity.com/ai
+    for more resources.'
+  errors: []
+  versions:
+    all:
+    - 2.2.0
+    - 2.2.1
+    - 2.2.2
+    - 2.3.0
+    - 2.4.0
+    - 2.4.1
+    compatible:
+    - 2.2.1
+    - 2.2.2
+    - 2.3.0
+    - 2.4.0
+    - 2.4.1
+    recommended: 2.2.2
+    deprecated: []
+  dependencies:
+  - name: com.unity.burst
+    version: 1.8.17
+  - name: com.unity.dt.app-ui
+    version: 1.3.1
+  - name: com.unity.collections
+    version: 2.4.3
+  - name: com.unity.nuget.newtonsoft-json
+    version: 3.2.1
+  - name: com.unity.modules.imageconversion
+    version: 1.0.0
+  resolvedDependencies:
+  - name: com.unity.burst
+    version: 1.8.24
+  - name: com.unity.mathematics
+    version: 1.3.2
+  - name: com.unity.modules.jsonserialize
+    version: 1.0.0
+  - name: com.unity.dt.app-ui
+    version: 1.3.1
+  - name: com.unity.modules.physics
+    version: 1.0.0
+  - name: com.unity.modules.androidjni
+    version: 1.0.0
+  - name: com.unity.modules.uielements
+    version: 1.0.0
+  - name: com.unity.modules.ui
+    version: 1.0.0
+  - name: com.unity.modules.imgui
+    version: 1.0.0
+  - name: com.unity.modules.hierarchycore
+    version: 1.0.0
+  - name: com.unity.modules.screencapture
+    version: 1.0.0
+  - name: com.unity.modules.imageconversion
+    version: 1.0.0
+  - name: com.unity.collections
+    version: 2.5.7
+  - name: com.unity.test-framework
+    version: 1.5.1
+  - name: com.unity.ext.nunit
+    version: 2.0.5
+  - name: com.unity.nuget.mono-cecil
+    version: 1.11.5
+  - name: com.unity.test-framework.performance
+    version: 3.1.0
+  - name: com.unity.nuget.newtonsoft-json
+    version: 3.2.1
+  keywords: []
+  registry:
+    id: main
+    name: 
+    url: https://packages.unity.com
+    scopes: []
+    isDefault: 1
+    capabilities: 7
+    configSource: 0
+    compliance:
+      status: 0
+      violations: []
+  hideInEditor: 1
+  entitlements:
+    licensingModel: 1
+  isAssetStorePackage: 0
+  datePublishedTicks: 638978011229670000
+  documentationUrl: https://docs.unity3d.com/Packages/com.unity.ai.inference@2.4/manual/index.html
+  hasRepository: 1
+  repository:
+    type: git
+    url: https://github.cds.internal.unity3d.com/unity/UnityInferenceEngine.git
+    revision: de8961cc6617388ab664c86c2c9b164f41609a99
+    path: 
+  unityLifecycle:
+    version: 2.2.1
+    nextVersion: 
+    recommendedVersion: 
+    isDeprecated: 0
+    deprecationMessage: 
+    isDiscoverable: 1
+  isDeprecated: 0
+  deprecationMessage: 
+  git:
+    hash: 
+    revision: 
+  upmReserved: '{"changelog":"### Fixed\n- Small error in documentation preventing
+    user manual publication"}'
+  assetStore:
+    productId: 
+  fingerprint: 587873fd5e1bd2d10f696bceb1a83c296823e927
+  editorCompatibility:
+    compatibilityLevel: 0
+    minimumPackageVersion: 2.2.1
+    minimumUnityVersion: 6000.0.0a1
+  compliance:
+    status: 0
+    violation:
+      scopePatternExpression: 
+      message: 
+      readMoreLink: 
 - packageId: com.unity.collab-proxy@2.10.1
   testable: 0
   isDirectDependency: 1
@@ -5031,55 +5467,191 @@ m_ResolvedPackages:
       scopePatternExpression: 
       message: 
       readMoreLink: 
-- packageId: com.unity.mathematics@1.3.2
+- packageId: com.unity.dt.app-ui@1.3.1
   testable: 0
   isDirectDependency: 0
-  version: 1.3.2
+  version: 1.3.1
   source: 1
-  resolvedPath: F:\MANU\PROGETTI\Unity Projects\Hanoi3D\Hanoi3DTEST\Library\PackageCache\com.unity.mathematics@8017b507cc74
-  assetPath: Packages/com.unity.mathematics
-  name: com.unity.mathematics
-  displayName: Mathematics
+  resolvedPath: F:\MANU\PROGETTI\Unity Projects\Hanoi3D\Hanoi3DTEST\Library\PackageCache\com.unity.dt.app-ui@7b87c8225c06
+  assetPath: Packages/com.unity.dt.app-ui
+  name: com.unity.dt.app-ui
+  displayName: App UI
   author:
     name: 
     email: 
     url: 
-  category: 
-  type: assets
-  description: Unity's C# SIMD math library providing vector types and math functions
-    with a shader like syntax.
+  category: UI
+  type: 
+  description: App UI is a versatile and customizable UI library for Unity that provides
+    essential building blocks for creating beautiful and responsive user interfaces.
+    With support for MVVM architecture, state management, and localization, App UI
+    simplifies app development while maintaining flexibility and extensibility. The
+    library includes a wide range of UI components, design tokens, and symbols, all
+    of which can be easily customized to fit your app's unique style and branding.
   errors: []
   versions:
     all:
-    - 0.0.12-preview.2
-    - 0.0.12-preview.5
-    - 0.0.12-preview.8
-    - 0.0.12-preview.10
-    - 0.0.12-preview.11
-    - 0.0.12-preview.13
-    - 0.0.12-preview.17
-    - 0.0.12-preview.19
-    - 0.0.12-preview.20
-    - 1.0.0-preview.1
+    - 0.2.7
+    - 0.2.9
+    - 0.2.11
+    - 0.2.12
+    - 0.3.1
+    - 0.3.2
+    - 0.3.3
+    - 0.3.4
+    - 0.3.5
+    - 0.3.8
+    - 0.3.9
+    - 0.4.0
+    - 0.4.1
+    - 0.4.2
+    - 0.5.0
+    - 0.5.1
+    - 0.5.2
+    - 0.5.3
+    - 0.5.4
+    - 0.5.5
+    - 0.6.0
+    - 0.6.1
+    - 0.6.2
+    - 0.6.3
+    - 0.6.4
+    - 0.6.5
+    - 1.0.0-pre.1
+    - 1.0.0-pre.2
+    - 1.0.0-pre.3
+    - 1.0.0-pre.4
+    - 1.0.0-pre.5
+    - 1.0.0-pre.6
+    - 1.0.0-pre.7
+    - 1.0.0-pre.8
+    - 1.0.0-pre.9
+    - 1.0.0-pre.10
+    - 1.0.0-pre.11
+    - 1.0.0-pre.12
+    - 1.0.0-pre.13
+    - 1.0.0-pre.14
+    - 1.0.0-pre.15
     - 1.0.1
-    - 1.1.0-preview.1
+    - 1.0.2
+    - 1.0.3
+    - 1.0.4
+    - 1.0.5
+    - 1.0.6
     - 1.1.0
+    - 1.1.1
+    - 1.2.0
     - 1.2.1
-    - 1.2.4
-    - 1.2.5
-    - 1.2.6
     - 1.3.1
-    - 1.3.2
-    - 1.3.3
+    - 2.0.0-pre.2
+    - 2.0.0-pre.3
+    - 2.0.0-pre.4
+    - 2.0.0-pre.5
+    - 2.0.0-pre.6
+    - 2.0.0-pre.7
+    - 2.0.0-pre.8
+    - 2.0.0-pre.9
+    - 2.0.0-pre.10
+    - 2.0.0-pre.11
+    - 2.0.0-pre.12
+    - 2.0.0-pre.13
+    - 2.0.0-pre.14
+    - 2.0.0-pre.15
+    - 2.0.0-pre.16
+    - 2.0.0-pre.17
+    - 2.0.0-pre.18
+    - 2.0.0-pre.19
+    - 2.0.0-pre.20
+    - 2.0.0-pre.21
+    - 2.0.0-pre.22
+    - 2.0.0
+    - 2.1.0-pre.1
+    - 2.1.0-pre.2
+    - 2.1.0-pre.3
+    - 2.1.0
+    - 2.1.1-pre.1
+    - 2.1.1
+    - 2.2.0-pre.1
+    - 2.2.0-pre.2
     compatible:
-    - 1.3.2
-    - 1.3.3
-    recommended: 1.3.3
+    - 1.3.1
+    - 2.0.0-pre.2
+    - 2.0.0-pre.3
+    - 2.0.0-pre.4
+    - 2.0.0-pre.5
+    - 2.0.0-pre.6
+    - 2.0.0-pre.7
+    - 2.0.0-pre.8
+    - 2.0.0-pre.9
+    - 2.0.0-pre.10
+    - 2.0.0-pre.11
+    - 2.0.0-pre.12
+    - 2.0.0-pre.13
+    - 2.0.0-pre.14
+    - 2.0.0-pre.15
+    - 2.0.0-pre.16
+    - 2.0.0-pre.17
+    - 2.0.0-pre.18
+    - 2.0.0-pre.19
+    - 2.0.0-pre.20
+    - 2.0.0-pre.21
+    - 2.0.0-pre.22
+    - 2.0.0
+    - 2.1.0-pre.1
+    - 2.1.0-pre.2
+    - 2.1.0-pre.3
+    - 2.1.0
+    - 2.1.1-pre.1
+    - 2.1.1
+    - 2.2.0-pre.1
+    - 2.2.0-pre.2
+    recommended: 1.3.1
     deprecated: []
-  dependencies: []
-  resolvedDependencies: []
+  dependencies:
+  - name: com.unity.modules.physics
+    version: 1.0.0
+  - name: com.unity.modules.androidjni
+    version: 1.0.0
+  - name: com.unity.modules.uielements
+    version: 1.0.0
+  - name: com.unity.modules.screencapture
+    version: 1.0.0
+  resolvedDependencies:
+  - name: com.unity.modules.physics
+    version: 1.0.0
+  - name: com.unity.modules.androidjni
+    version: 1.0.0
+  - name: com.unity.modules.uielements
+    version: 1.0.0
+  - name: com.unity.modules.ui
+    version: 1.0.0
+  - name: com.unity.modules.imgui
+    version: 1.0.0
+  - name: com.unity.modules.jsonserialize
+    version: 1.0.0
+  - name: com.unity.modules.hierarchycore
+    version: 1.0.0
+  - name: com.unity.modules.screencapture
+    version: 1.0.0
+  - name: com.unity.modules.imageconversion
+    version: 1.0.0
   keywords:
+  - app
+  - ui
+  - components
+  - runtime
+  - framework
+  - navigation
+  - dependency-injection
+  - mvvm
+  - undostack
+  - redux
+  - state-management
+  - dark-theme
+  - data-binding
+  - cloud
   - unity
+  - app-ui
   registry:
     id: main
     name: 
@@ -5095,36 +5667,34 @@ m_ResolvedPackages:
   entitlements:
     licensingModel: 1
   isAssetStorePackage: 0
-  datePublishedTicks: 638409134840000000
-  documentationUrl: https://docs.unity3d.com/Packages/com.unity.mathematics@1.3/manual/index.html
+  datePublishedTicks: 638887003362730000
+  documentationUrl: https://docs.unity3d.com/Packages/com.unity.dt.app-ui@1.3/manual/index.html
   hasRepository: 1
   repository:
     type: git
-    url: https://github.com/Unity-Technologies/Unity.Mathematics.git
-    revision: 1695a8503482a3131be78cc26308a93f82c05b04
+    url: https://github.com/Unity-Technologies/unity-app-ui.git
+    revision: 3c151f9a0a6981b1f7293b70420639802d5c6c1b
     path: 
   unityLifecycle:
-    version: 1.3.2
-    nextVersion: 
+    version: 1.3.1
+    nextVersion: 2.1.0-pre.2
     recommendedVersion: 
     isDeprecated: 0
     deprecationMessage: 
-    isDiscoverable: 1
+    isDiscoverable: 0
   isDeprecated: 0
   deprecationMessage: 
   git:
     hash: 
     revision: 
-  upmReserved: '{"changelog":"### Fixed\n* Fixed `math.hash` crash when using IL2CPP
-    builds on Arm 32 bit devices.\n* Fixed obsolete method usage warnings for `MatrixDrawer.CanCacheInspectorGUI`
-    and `PrimitiveVectorDrawer.CanCacheInspectorGUI` in UNITY_2023_2_OR_NEWER.\n*
-    Updated minimum editor version to 2021.3"}'
+  upmReserved: '{"changelog":"### Removed\n\n- Removed warning messages about using
+    obsolete code."}'
   assetStore:
     productId: 
-  fingerprint: 8017b507cc74bf0a1dd14b18aa860569f807314d
+  fingerprint: 7b87c8225c066f90ed48f3fbee5375942c16f476
   editorCompatibility:
     compatibilityLevel: 0
-    minimumPackageVersion: 1.3.2
+    minimumPackageVersion: 1.3.1
     minimumUnityVersion: 2021.3.0a1
   compliance:
     status: 0
@@ -5320,6 +5890,477 @@ m_ResolvedPackages:
     compatibilityLevel: 0
     minimumPackageVersion: 2.5.7
     minimumUnityVersion: 2022.3.20f1
+  compliance:
+    status: 0
+    violation:
+      scopePatternExpression: 
+      message: 
+      readMoreLink: 
+- packageId: com.unity.nuget.newtonsoft-json@3.2.1
+  testable: 0
+  isDirectDependency: 0
+  version: 3.2.1
+  source: 1
+  resolvedPath: F:\MANU\PROGETTI\Unity Projects\Hanoi3D\Hanoi3DTEST\Library\PackageCache\com.unity.nuget.newtonsoft-json@74deb55db2a0
+  assetPath: Packages/com.unity.nuget.newtonsoft-json
+  name: com.unity.nuget.newtonsoft-json
+  displayName: Newtonsoft Json
+  author:
+    name: 
+    email: 
+    url: 
+  category: 
+  type: library
+  description: 'Newtonsoft Json for use in Unity projects and Unity packages. Currently
+    synced to version 13.0.2.
+
+
+    This package is used for advanced json serialization
+    and deserialization. Most Unity users will be better suited using the existing
+    json tools built into Unity.
+
+    To avoid assembly clashes, please use this
+    package if you intend to use Newtonsoft Json.'
+  errors: []
+  versions:
+    all:
+    - 1.0.0-preview.2
+    - 1.0.0-preview.3
+    - 1.0.0-preview.4
+    - 1.0.1-preview.1
+    - 1.1.2
+    - 2.0.0-preview
+    - 2.0.0-preview.1
+    - 2.0.0-preview.2
+    - 2.0.0
+    - 2.0.1-preview.1
+    - 2.0.2
+    - 3.0.1
+    - 3.0.2
+    - 3.1.0
+    - 3.2.0
+    - 3.2.1
+    - 3.2.2
+    compatible:
+    - 3.2.1
+    - 3.2.2
+    recommended: 3.2.2
+    deprecated: []
+  dependencies: []
+  resolvedDependencies: []
+  keywords: []
+  registry:
+    id: main
+    name: 
+    url: https://packages.unity.com
+    scopes: []
+    isDefault: 1
+    capabilities: 7
+    configSource: 0
+    compliance:
+      status: 0
+      violations: []
+  hideInEditor: 1
+  entitlements:
+    licensingModel: 1
+  isAssetStorePackage: 0
+  datePublishedTicks: 638186318800000000
+  documentationUrl: 
+  hasRepository: 1
+  repository:
+    type: git
+    url: https://github.cds.internal.unity3d.com/unity/com.unity.nuget.newtonsoft-json.git
+    revision: d8e49aef8979bef617144382052ec2f479645eaf
+    path: 
+  unityLifecycle:
+    version: 3.2.1
+    nextVersion: 
+    recommendedVersion: 
+    isDeprecated: 0
+    deprecationMessage: 
+    isDiscoverable: 0
+  isDeprecated: 0
+  deprecationMessage: 
+  git:
+    hash: 
+    revision: 
+  upmReserved: '{"changelog":"* Fixed Newtonsoft DLL when compiling with netstandard
+    2.0."}'
+  assetStore:
+    productId: 
+  fingerprint: 74deb55db2a0c29ddfda576608bcb86abbd13ee6
+  editorCompatibility:
+    compatibilityLevel: 0
+    minimumPackageVersion: 3.2.1
+    minimumUnityVersion: 2018.4.0a1
+  compliance:
+    status: 0
+    violation:
+      scopePatternExpression: 
+      message: 
+      readMoreLink: 
+- packageId: com.unity.ai.toolkit@1.0.0-pre.20
+  testable: 0
+  isDirectDependency: 0
+  version: 1.0.0-pre.20
+  source: 1
+  resolvedPath: F:\MANU\PROGETTI\Unity Projects\Hanoi3D\Hanoi3DTEST\Library\PackageCache\com.unity.ai.toolkit@48a271771d1a
+  assetPath: Packages/com.unity.ai.toolkit
+  name: com.unity.ai.toolkit
+  displayName: AI Toolkit
+  author:
+    name: 
+    email: 
+    url: 
+  category: 
+  type: 
+  description: AI Toolkit is a package that provides tools for adding generative
+    AI to Unity.
+  errors: []
+  versions:
+    all:
+    - 1.0.0-pre.2
+    - 1.0.0-pre.3
+    - 1.0.0-pre.4
+    - 1.0.0-pre.5
+    - 1.0.0-pre.6
+    - 1.0.0-pre.7
+    - 1.0.0-pre.8
+    - 1.0.0-pre.9
+    - 1.0.0-pre.10
+    - 1.0.0-pre.11
+    - 1.0.0-pre.12
+    - 1.0.0-pre.13
+    - 1.0.0-pre.14
+    - 1.0.0-pre.15
+    - 1.0.0-pre.16
+    - 1.0.0-pre.17
+    - 1.0.0-pre.18
+    - 1.0.0-pre.19
+    - 1.0.0-pre.20
+    compatible:
+    - 1.0.0-pre.2
+    - 1.0.0-pre.3
+    - 1.0.0-pre.4
+    - 1.0.0-pre.5
+    - 1.0.0-pre.6
+    - 1.0.0-pre.7
+    - 1.0.0-pre.8
+    - 1.0.0-pre.9
+    - 1.0.0-pre.10
+    - 1.0.0-pre.11
+    - 1.0.0-pre.12
+    - 1.0.0-pre.13
+    - 1.0.0-pre.14
+    - 1.0.0-pre.15
+    - 1.0.0-pre.16
+    - 1.0.0-pre.17
+    - 1.0.0-pre.18
+    - 1.0.0-pre.19
+    - 1.0.0-pre.20
+    recommended: 
+    deprecated: []
+  dependencies:
+  - name: com.unity.nuget.newtonsoft-json
+    version: 3.2.1
+  resolvedDependencies:
+  - name: com.unity.nuget.newtonsoft-json
+    version: 3.2.1
+  keywords: []
+  registry:
+    id: main
+    name: 
+    url: https://packages.unity.com
+    scopes: []
+    isDefault: 1
+    capabilities: 7
+    configSource: 0
+    compliance:
+      status: 0
+      violations: []
+  hideInEditor: 1
+  entitlements:
+    licensingModel: 1
+  isAssetStorePackage: 0
+  datePublishedTicks: 638919866100850000
+  documentationUrl: https://docs.unity3d.com/Packages/com.unity.ai.toolkit@1.0/manual/index.html
+  hasRepository: 1
+  repository:
+    type: git
+    url: https://github.cds.internal.unity3d.com/unity/UnityAIWorkflows.git
+    revision: 84efef4741a539de4207f78fdb59d739e9878e2b
+    path: 
+  unityLifecycle:
+    version: 
+    nextVersion: 1.0.0-pre.8
+    recommendedVersion: 
+    isDeprecated: 0
+    deprecationMessage: 
+    isDiscoverable: 0
+  isDeprecated: 0
+  deprecationMessage: 
+  git:
+    hash: 
+    revision: 
+  upmReserved: '{"changelog":"### Fixed\n\n- Refresh generator models when connection
+    is established."}'
+  assetStore:
+    productId: 
+  fingerprint: 48a271771d1a565c2682042ac24762e303c85c66
+  editorCompatibility:
+    compatibilityLevel: 0
+    minimumPackageVersion: 1.0.0-pre.2
+    minimumUnityVersion: 6000.2.0a1
+  compliance:
+    status: 0
+    violation:
+      scopePatternExpression: 
+      message: 
+      readMoreLink: 
+- packageId: com.unity.mathematics@1.3.2
+  testable: 0
+  isDirectDependency: 0
+  version: 1.3.2
+  source: 1
+  resolvedPath: F:\MANU\PROGETTI\Unity Projects\Hanoi3D\Hanoi3DTEST\Library\PackageCache\com.unity.mathematics@8017b507cc74
+  assetPath: Packages/com.unity.mathematics
+  name: com.unity.mathematics
+  displayName: Mathematics
+  author:
+    name: 
+    email: 
+    url: 
+  category: 
+  type: assets
+  description: Unity's C# SIMD math library providing vector types and math functions
+    with a shader like syntax.
+  errors: []
+  versions:
+    all:
+    - 0.0.12-preview.2
+    - 0.0.12-preview.5
+    - 0.0.12-preview.8
+    - 0.0.12-preview.10
+    - 0.0.12-preview.11
+    - 0.0.12-preview.13
+    - 0.0.12-preview.17
+    - 0.0.12-preview.19
+    - 0.0.12-preview.20
+    - 1.0.0-preview.1
+    - 1.0.1
+    - 1.1.0-preview.1
+    - 1.1.0
+    - 1.2.1
+    - 1.2.4
+    - 1.2.5
+    - 1.2.6
+    - 1.3.1
+    - 1.3.2
+    - 1.3.3
+    compatible:
+    - 1.3.2
+    - 1.3.3
+    recommended: 1.3.3
+    deprecated: []
+  dependencies: []
+  resolvedDependencies: []
+  keywords:
+  - unity
+  registry:
+    id: main
+    name: 
+    url: https://packages.unity.com
+    scopes: []
+    isDefault: 1
+    capabilities: 7
+    configSource: 0
+    compliance:
+      status: 0
+      violations: []
+  hideInEditor: 1
+  entitlements:
+    licensingModel: 1
+  isAssetStorePackage: 0
+  datePublishedTicks: 638409134840000000
+  documentationUrl: https://docs.unity3d.com/Packages/com.unity.mathematics@1.3/manual/index.html
+  hasRepository: 1
+  repository:
+    type: git
+    url: https://github.com/Unity-Technologies/Unity.Mathematics.git
+    revision: 1695a8503482a3131be78cc26308a93f82c05b04
+    path: 
+  unityLifecycle:
+    version: 1.3.2
+    nextVersion: 
+    recommendedVersion: 
+    isDeprecated: 0
+    deprecationMessage: 
+    isDiscoverable: 1
+  isDeprecated: 0
+  deprecationMessage: 
+  git:
+    hash: 
+    revision: 
+  upmReserved: '{"changelog":"### Fixed\n* Fixed `math.hash` crash when using IL2CPP
+    builds on Arm 32 bit devices.\n* Fixed obsolete method usage warnings for `MatrixDrawer.CanCacheInspectorGUI`
+    and `PrimitiveVectorDrawer.CanCacheInspectorGUI` in UNITY_2023_2_OR_NEWER.\n*
+    Updated minimum editor version to 2021.3"}'
+  assetStore:
+    productId: 
+  fingerprint: 8017b507cc74bf0a1dd14b18aa860569f807314d
+  editorCompatibility:
+    compatibilityLevel: 0
+    minimumPackageVersion: 1.3.2
+    minimumUnityVersion: 2021.3.0a1
+  compliance:
+    status: 0
+    violation:
+      scopePatternExpression: 
+      message: 
+      readMoreLink: 
+- packageId: com.unity.serialization@3.1.2
+  testable: 0
+  isDirectDependency: 0
+  version: 3.1.2
+  source: 1
+  resolvedPath: F:\MANU\PROGETTI\Unity Projects\Hanoi3D\Hanoi3DTEST\Library\PackageCache\com.unity.serialization@582cbf30bbfd
+  assetPath: Packages/com.unity.serialization
+  name: com.unity.serialization
+  displayName: Serialization
+  author:
+    name: 
+    email: 
+    url: 
+  category: 
+  type: asset
+  description: Use Unity's Serialization to serialize and deserialize from/to JSON
+    and Binary formats.
+  errors: []
+  versions:
+    all:
+    - 0.2.1-preview
+    - 0.3.0-preview
+    - 0.3.1-preview
+    - 0.4.0-preview
+    - 0.4.1-preview
+    - 0.5.0-preview
+    - 0.5.1-preview
+    - 0.6.0-preview
+    - 0.6.1-preview
+    - 0.6.2-preview
+    - 0.6.3-preview
+    - 0.6.4-preview
+    - 1.0.0-preview.5
+    - 1.1.0-preview
+    - 1.1.1-preview
+    - 1.2.0-preview
+    - 1.3.0-preview
+    - 1.3.1-preview
+    - 1.4.3-preview
+    - 1.5.0-preview
+    - 1.6.0-preview
+    - 1.6.1-preview
+    - 1.6.2-preview
+    - 1.7.0-preview.1
+    - 1.7.1-preview
+    - 1.7.3-preview
+    - 1.7.4-preview
+    - 1.7.5-preview
+    - 1.8.2-preview
+    - 1.8.3-preview
+    - 2.0.0-exp.11
+    - 2.0.0-exp.13
+    - 2.1.0-exp.1
+    - 2.1.1-exp.1
+    - 2.1.2-exp.1
+    - 3.0.0-pre.1
+    - 3.0.0-pre.2
+    - 3.0.0-pre.3
+    - 3.1.1
+    - 3.1.2
+    - 3.1.3
+    - 3.1.5
+    compatible:
+    - 3.1.2
+    - 3.1.3
+    - 3.1.5
+    recommended: 3.1.5
+    deprecated: []
+  dependencies:
+  - name: com.unity.burst
+    version: 1.7.2
+  - name: com.unity.collections
+    version: 2.4.2
+  resolvedDependencies:
+  - name: com.unity.burst
+    version: 1.8.24
+  - name: com.unity.mathematics
+    version: 1.3.2
+  - name: com.unity.modules.jsonserialize
+    version: 1.0.0
+  - name: com.unity.collections
+    version: 2.5.7
+  - name: com.unity.test-framework
+    version: 1.5.1
+  - name: com.unity.ext.nunit
+    version: 2.0.5
+  - name: com.unity.modules.imgui
+    version: 1.0.0
+  - name: com.unity.nuget.mono-cecil
+    version: 1.11.5
+  - name: com.unity.test-framework.performance
+    version: 3.1.0
+  keywords:
+  - serialization
+  - json
+  - binary
+  - unity
+  registry:
+    id: main
+    name: 
+    url: https://packages.unity.com
+    scopes: []
+    isDefault: 1
+    capabilities: 7
+    configSource: 0
+    compliance:
+      status: 0
+      violations: []
+  hideInEditor: 1
+  entitlements:
+    licensingModel: 1
+  isAssetStorePackage: 0
+  datePublishedTicks: 638599246800000000
+  documentationUrl: https://docs.unity3d.com/Packages/com.unity.serialization@3.1/manual/index.html
+  hasRepository: 1
+  repository:
+    type: git
+    url: https://github.cds.internal.unity3d.com/unity/com.unity.properties.git
+    revision: cb798388e9a2cfa022a3bbd84012a9c61c61b7f4
+    path: 
+  unityLifecycle:
+    version: 3.1.2
+    nextVersion: 
+    recommendedVersion: 
+    isDeprecated: 0
+    deprecationMessage: 
+    isDiscoverable: 0
+  isDeprecated: 0
+  deprecationMessage: 
+  git:
+    hash: 
+    revision: 
+  upmReserved: '{"changelog":"### Changed\n* Updated `com.unity.collections` to version
+    `2.4.2`.\n* Updated minimum Unity version to `2022.3`.\n\n### Fixed\n* Fixed
+    the way type names are exported to ensure that they can be correctly retrieved
+    using `Type.GetType()`."}'
+  assetStore:
+    productId: 
+  fingerprint: 582cbf30bbfd3c90a738e49c2ad69eafd8803f1d
+  editorCompatibility:
+    compatibilityLevel: 0
+    minimumPackageVersion: 3.1.2
+    minimumUnityVersion: 2022.2.0a18
   compliance:
     status: 0
     violation:
