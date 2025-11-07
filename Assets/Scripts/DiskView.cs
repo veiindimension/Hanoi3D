@@ -226,63 +226,61 @@ namespace Hanoi.View
         /// <summary>
         /// Moves the disk back to its initial position if dropped outside valid towers.
         /// </summary>
-        public void ResetToInitialPosition()
-        {
-            transform.position = initialPosition;
-
-            if (rb != null)
-            {
-                rb.linearVelocity = Vector3.zero;
-                rb.angularVelocity = Vector3.zero;
-            }
-
-            Debug.Log("[DiskView] Disk reset to initial position.");
-        }
+        
 
         /// <summary>
         /// Moves the disk back to its original position on Tower 0.
+        /// This method is static because with dynamic switch from tower to tower it would create bugs onto the counter of moves.
         /// </summary>
-        public void ResetToOrigin()
+        public void ResetPosition()
         {
-            // Reset the disk to its original position on Tower 0
-            transform.position = controller.GetTowerTransforms()[0].position;
 
-            if (rb != null)
+            // Check if the initial position was Tower 0
+            if (model.TowerIndex == 0)
             {
-                rb.linearVelocity = Vector3.zero;
-                rb.angularVelocity = Vector3.zero;
+                // Reset the disk to its original position on Tower 0
+                transform.position = controller.GetTowerTransforms()[0].position;
+
+                if (rb != null)
+                {
+                    rb.linearVelocity = Vector3.zero;
+                    rb.angularVelocity = Vector3.zero;
+                }
+
+                Debug.Log("[DiskView] Disk reset to original position on Tower 0.");
             }
 
-            Debug.Log("[DiskView] Disk reset to original position on Tower 0.");
-        }
-
-        public void ResetToOrigin1()
-        {
-            // Reset the disk to its original position on Tower 1
-            transform.position = controller.GetTowerTransforms()[1].position;
-
-            if (rb != null)
+            // Check if the initial position was Tower 1
+            if (model.TowerIndex == 1)
             {
-                rb.linearVelocity = Vector3.zero;
-                rb.angularVelocity = Vector3.zero;
+                // Reset the disk to its original position on Tower 1
+                transform.position = controller.GetTowerTransforms()[1].position;
+
+                if (rb != null)
+                {
+                    rb.linearVelocity = Vector3.zero;
+                    rb.angularVelocity = Vector3.zero;
+                }
+
+                Debug.Log("[DiskView] Disk reset to original position on Tower 1.");
             }
 
-            Debug.Log("[DiskView] Disk reset to original position on Tower 1.");
-        }
-
-        public void ResetToOrigin2()
-        {
-            // Reset the disk to its original position on Tower 2
-            transform.position = controller.GetTowerTransforms()[2].position;
-
-            if (rb != null)
+            // Check if the initial position was Tower 2
+            if (model.TowerIndex == 2)
             {
-                rb.linearVelocity = Vector3.zero;
-                rb.angularVelocity = Vector3.zero;
-            }
+                // Reset the disk to its original position on Tower 2
+                transform.position = controller.GetTowerTransforms()[2].position;
 
-            Debug.Log("[DiskView] Disk reset to original position on Tower 2.");
+                if (rb != null)
+                {
+                    rb.linearVelocity = Vector3.zero;
+                    rb.angularVelocity = Vector3.zero;
+                }
+
+                Debug.Log("[DiskView] Disk reset to original position on Tower 2.");
+            }
         }
+
 
         /// <summary>
         /// Waits briefly for physics to settle, then checks which tower the disk landed on.
@@ -296,7 +294,7 @@ namespace Hanoi.View
             if (towers == null || towers.Count == 0)
             {
                 Debug.LogWarning("[DiskView] No tower references found.");
-                ResetToInitialPosition();
+                ResetPosition();
                 yield break;
             }
 
@@ -312,7 +310,7 @@ namespace Hanoi.View
             if (dist > 1.5f)
             {
                 Debug.Log("[DiskView] Disk landed too far from any tower → resetting.");
-                ResetToInitialPosition();
+                ResetPosition();
                 yield break;
             }
 
@@ -322,18 +320,7 @@ namespace Hanoi.View
             {
                 Debug.LogWarning($"[DiskView] Cannot place Disk {model.Size} on top of Disk {targetTopDisk.Size} in Tower {targetIndex}. Returning to initial position.");
                 // Check if the initial position was Tower 0
-                if (model.TowerIndex == 0)
-                {
-                    ResetToOrigin(); // Send the disk back to Tower 0
-                }
-                if (model.TowerIndex == 1)
-                {
-                    ResetToOrigin1(); // Send the disk back to its initial position
-                }
-                if (model.TowerIndex == 2)
-                {
-                    ResetToOrigin2(); // Send the disk back to its initial position
-                }
+                ResetPosition();
                 yield break;
             }
 

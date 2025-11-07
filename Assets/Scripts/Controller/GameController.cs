@@ -242,7 +242,7 @@ namespace Hanoi.Controller
             if (targetTopDisk != null && model.Size > targetTopDisk.Size)
             {
                 Debug.LogWarning($"[GameController] Cannot place disk {model.Size} on top of disk {targetTopDisk.Size} in Tower {targetTowerIndex}. Returning to initial position.");
-                disk.ResetToOrigin();
+                disk.ResetPosition();
                 return;
             }
 
