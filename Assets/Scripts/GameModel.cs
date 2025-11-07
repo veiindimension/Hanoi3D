@@ -1,3 +1,6 @@
+﻿// 07/11/2025 AI-Tag
+// This was created with the help of Assistant, a Unity Artificial Intelligence product.
+
 using System.Collections.Generic;
 
 namespace Hanoi.Model
@@ -22,7 +25,7 @@ namespace Hanoi.Model
 
         /// <summary>
         /// Initializes the model with a given number of disks.
-        /// Disks start on tower 0 in random order.
+        /// Disks start on tower 0 in order from largest to smallest.
         /// </summary>
         public void Initialize(int diskCount)
         {
@@ -33,22 +36,10 @@ namespace Hanoi.Model
             for (int i = 0; i < 3; i++)
                 Towers[i] = new TowerModel();
 
-            // Create unique disk sizes
-            List<int> sizes = new List<int>();
-            for (int i = 1; i <= diskCount; i++)
-                sizes.Add(i);
-
-            // Shuffle order randomly
-            for (int i = 0; i < sizes.Count; i++)
+            // Create unique disk sizes in descending order
+            for (int i = diskCount; i >= 1; i--)
             {
-                int randomIndex = UnityEngine.Random.Range(0, sizes.Count);
-                (sizes[i], sizes[randomIndex]) = (sizes[randomIndex], sizes[i]);
-            }
-
-            // Push all disks onto the first tower
-            foreach (int size in sizes)
-            {
-                Towers[0].Push(new DiskModel(size, 0));
+                Towers[0].Push(new DiskModel(i, 0));
             }
         }
 
@@ -68,11 +59,22 @@ namespace Hanoi.Model
         }
 
         /// <summary>
-        /// Checks if the game is finished (all disks moved to the last tower).
+        /// Checks if the game is finished (all disks moved to the last tower in order).
         /// </summary>
         public bool IsGameComplete()
         {
-            return Towers[2].Count == DiskCount;
+            if (Towers[2].Count != DiskCount) return false;
+
+            // Check if disks are in order from largest to smallest
+            int expectedSize = DiskCount;
+            foreach (var disk in Towers[2].Disks)
+            {
+                if (disk.Size != expectedSize)
+                    return false;
+                expectedSize--;
+            }
+
+            return true;
         }
     }
 }

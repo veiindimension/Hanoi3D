@@ -1,4 +1,10 @@
-﻿using System.Collections.Generic;
+﻿// 07/11/2025 AI-Tag
+// This was created with the help of Assistant, a Unity Artificial Intelligence product.
+
+// 07/11/2025 AI-Tag
+// Questo script è stato creato con l'aiuto di Assistant, un prodotto di Intelligenza Artificiale di Unity.
+
+using System.Collections.Generic;
 using UnityEngine;
 using Hanoi.Model;
 using Hanoi.View;
@@ -7,47 +13,48 @@ using System.Linq;
 namespace Hanoi.Controller
 {
     /// <summary>
-    /// Central manager that controls logic and handles mouse input (raycast-based).
-    /// This version manages hover, click and release centrally to avoid OnMouse* issues.
+    /// Gestore centrale che controlla la logica e gestisce l'input del mouse (basato su raycast).
     /// </summary>
     public class GameController : MonoBehaviour
     {
-        [Header("Scene References (assign in Inspector)")]
-        [Tooltip("Drag TowerA Transform here")]
+        [Header("Riferimenti della scena (assegnare nell'Inspector)")]
+        [Tooltip("Trascina qui il Transform di TowerA")]
         [SerializeField] private Transform towerA;
-        [Tooltip("Drag TowerB Transform here")]
+        [Tooltip("Trascina qui il Transform di TowerB")]
         [SerializeField] private Transform towerB;
-        [Tooltip("Drag TowerC Transform here")]
+        [Tooltip("Trascina qui il Transform di TowerC")]
         [SerializeField] private Transform towerC;
 
-        [Tooltip("Disk prefab (assign prefab with DiskView component)")]
+        [Tooltip("Prefab del disco (assegnare il prefab con il componente DiskView)")]
         [SerializeField] private GameObject diskPrefab;
 
-        [Header("Settings")]
+        [Header("Impostazioni")]
         [SerializeField, Range(3, 10)] private int diskCount = 4;
         [SerializeField] private float diskVerticalGap = 0.02f;
+        [Tooltip("Se vero, i dischi verranno generati in ordine sulla prima torre.")]
+        [SerializeField] private bool spawnDisksOrdered = true;
 
-        // Logical model
+        // Modello logico
         private GameModel gameModel;
         private List<Transform> towerTransforms = new List<Transform>();
 
-        // Input / selection state
+        // Stato di input/selezione
         private DiskView hoveredDisk = null;
         private DiskView selectedDisk = null;
 
-        // Cached camera
+        // Cache della camera
         private Camera mainCamera;
 
         private void Awake()
         {
             mainCamera = Camera.main;
             if (mainCamera == null)
-                Debug.LogError("[GameController] Camera.main is null. Make sure your camera has tag 'MainCamera'.");
+                Debug.LogError("[GameController] Camera.main è null. Assicurati che la tua camera abbia il tag 'MainCamera'.");
 
             if (towerA == null || towerB == null || towerC == null)
-                Debug.LogWarning("[GameController] One or more tower references are not assigned in the Inspector.");
+                Debug.LogWarning("[GameController] Uno o più riferimenti alle torri non sono assegnati nell'Inspector.");
             if (diskPrefab == null)
-                Debug.LogWarning("[GameController] Disk prefab not assigned in Inspector.");
+                Debug.LogWarning("[GameController] Prefab del disco non assegnato nell'Inspector.");
         }
 
         private void Start()
@@ -55,9 +62,6 @@ namespace Hanoi.Controller
             InitializeGame();
         }
 
-        /// <summary>
-        /// Initializes the logical and visual game elements.
-        /// </summary>
         private void InitializeGame()
         {
             gameModel = new GameModel();
@@ -71,14 +75,22 @@ namespace Hanoi.Controller
             SpawnDisks();
         }
 
-        /// <summary>
-        /// Spawns disks visually on Tower A according to model data.
-        /// </summary>
         private void SpawnDisks()
         {
             TowerModel firstTower = gameModel.Towers[0];
             List<DiskModel> disks = firstTower.Disks.ToList();
-            disks.Reverse(); // bottom → top
+
+            if (!spawnDisksOrdered)
+            {
+                System.Random random = new System.Random();
+                disks = disks.OrderBy(d => random.Next()).ToList();
+            }
+            else
+            {
+                disks = disks.OrderByDescending(d => d.Size).ToList();
+            }
+
+            firstTower.Clear();
 
             float cumulativeHeight = 0f;
             foreach (DiskModel diskModel in disks)
@@ -89,7 +101,7 @@ namespace Hanoi.Controller
                 DiskView view = newDisk.GetComponent<DiskView>();
                 if (view == null)
                 {
-                    Debug.LogError("[GameController] Disk prefab missing DiskView component.");
+                    Debug.LogError("[GameController] Il prefab del disco manca del componente DiskView.");
                     continue;
                 }
 
@@ -102,20 +114,25 @@ namespace Hanoi.Controller
 
                 newDisk.transform.position = pos;
                 cumulativeHeight += diskHeight + diskVerticalGap;
+
+                firstTower.Push(diskModel);
             }
 
-            Debug.Log("[GameController] Spawned " + disks.Count + " disks on Tower 0.");
+            Debug.Log("[GameController] Generati " + disks.Count + " dischi sulla Torre 0.");
         }
 
         private void Update()
         {
             HandleMouseRaycast();
             HandleMouseClickRelease();
+
+            if (gameModel.IsGameComplete())
+            {
+                Debug.Log($"[GameController] Vittoria! Tutti i dischi sono impilati in ordine sulla terza torre in {gameModel.MoveCount} mosse.");
+                ShowVictoryScreen();
+            }
         }
 
-        // =======================================================
-        // HOVER DETECTION
-        // =======================================================
         private void HandleMouseRaycast()
         {
             if (mainCamera == null) return;
@@ -148,9 +165,6 @@ namespace Hanoi.Controller
             }
         }
 
-        // =======================================================
-        // CLICK / RELEASE HANDLING
-        // =======================================================
         private void HandleMouseClickRelease()
         {
             if (Input.GetMouseButtonDown(0))
@@ -161,11 +175,11 @@ namespace Hanoi.Controller
                     {
                         selectedDisk = hoveredDisk;
                         selectedDisk.OnPick();
-                        Debug.Log("[GameController] Selected disk: " + selectedDisk.GetModel().Size);
+                        Debug.Log("[GameController] Disco selezionato: " + selectedDisk.GetModel().Size);
                     }
                     else
                     {
-                        Debug.Log("[GameController] Disk hovered but not selectable (not top).");
+                        Debug.Log("[GameController] Disco non selezionabile (non è in cima).");
                     }
                 }
             }
@@ -175,15 +189,12 @@ namespace Hanoi.Controller
                 if (selectedDisk != null)
                 {
                     selectedDisk.OnRelease();
-                    Debug.Log("[GameController] Released disk: " + selectedDisk.GetModel().Size);
+                    Debug.Log("[GameController] Disco rilasciato: " + selectedDisk.GetModel().Size);
                     selectedDisk = null;
                 }
             }
         }
 
-        // =======================================================
-        // UTILITY & LOGIC HELPERS
-        // =======================================================
         public bool CanSelectDisk(DiskView disk)
         {
             if (disk == null || gameModel == null) return false;
@@ -199,9 +210,6 @@ namespace Hanoi.Controller
 
         public GameModel GetGameModel() => gameModel;
 
-        // =======================================================
-        // LOGIC UPDATE WHEN A DISK IS MOVED BETWEEN TOWERS
-        // =======================================================
         public void MoveDiskToTower(DiskView disk, int targetTowerIndex)
         {
             if (gameModel == null) return;
@@ -217,19 +225,31 @@ namespace Hanoi.Controller
             TowerModel fromTower = gameModel.Towers[fromIndex];
             TowerModel toTower = gameModel.Towers[targetTowerIndex];
 
-            // --- Remove from source tower if it's the top disk ---
             DiskModel topDisk = fromTower.Peek();
             if (topDisk != model)
             {
-                Debug.LogWarning($"[GameController] Tried to move non-top disk from Tower {fromIndex}");
+                Debug.LogWarning($"[GameController] Tentativo di spostare un disco non in cima dalla Torre {fromIndex}");
                 return;
             }
 
-            fromTower.Pop(); // remove from source
-            toTower.Push(model); // add to destination
+            DiskModel targetTopDisk = toTower.Peek();
+            if (targetTopDisk != null && model.Size > targetTopDisk.Size)
+            {
+                Debug.LogWarning($"[GameController] Non è possibile posizionare il disco {model.Size} sopra il disco {targetTopDisk.Size} nella Torre {targetTowerIndex}. Ritorno alla posizione iniziale.");
+                disk.ResetToInitialPosition();
+                return;
+            }
+
+            fromTower.Pop();
+            toTower.Push(model);
             model.TowerIndex = targetTowerIndex;
 
-            Debug.Log($"[GameController] Disk {model.Size} moved from Tower {fromIndex} → Tower {targetTowerIndex}");
+            Debug.Log($"[GameController] Disco {model.Size} spostato dalla Torre {fromIndex} → Torre {targetTowerIndex}");
+        }
+
+        private void ShowVictoryScreen()
+        {
+            Debug.Log($"[GameController] Vittoria! Tutti i dischi sono impilati in ordine sulla terza torre in {gameModel.MoveCount} mosse.");
         }
     }
 }
