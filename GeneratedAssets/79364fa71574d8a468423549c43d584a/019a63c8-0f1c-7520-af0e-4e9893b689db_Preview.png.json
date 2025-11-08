@@ -1,0 +1,11 @@
+{
+    "asset": "79364fa71574d8a468423549c43d584a",
+    "fileName": "019a63c8-0f1c-7520-af0e-4e9893b689db_Preview.png",
+    "prompt": "Marble ",
+    "negativePrompt": "",
+    "model": "44ec3749-963a-44b1-aa54-dc19f6ed8ab2",
+    "modelName": "Unity Texture2D",
+    "customSeed": 2103857020,
+    "w3CTraceId": "0cc21569733d1570773b258912b3c7bc",
+    "refinementMode": "Generation"
+}
