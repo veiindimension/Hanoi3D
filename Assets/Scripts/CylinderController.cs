@@ -1,8 +1,10 @@
+using Hanoi.Controller;
 using UnityEngine;
 
 public class CylinderController : MonoBehaviour
 {
     [Header("Riferimenti")]
+    [SerializeField] private GameController gameController; // Riferimento al GameController
     [SerializeField] private Transform selectorsParent; // Riferimento al GameObject "Selectors"
 
     private Camera mainCamera;
@@ -96,7 +98,20 @@ public class CylinderController : MonoBehaviour
         if (closestSelector != null)
         {
             transform.position = new Vector3(closestSelector.position.x, transform.position.y, transform.position.z);
-            Debug.Log($"[CylinderController] Cilindro agganciato al selector: {closestSelector.name}");
+
+            // Aggiorna il diskCount nel GameController
+            int diskCount;
+            if (int.TryParse(closestSelector.name, out diskCount))
+            {
+                gameController.diskCount = diskCount;
+
+                // Debug per confermare l'aggiornamento
+                Debug.Log($"[CylinderController] Cilindro agganciato al Selector '{closestSelector.name}'. DiskCount aggiornato a {gameController.diskCount}.");
+            }
+            else
+            {
+                Debug.LogError($"[CylinderController] Il nome del Selector '{closestSelector.name}' non è un numero valido.");
+            }
         }
     }
 }

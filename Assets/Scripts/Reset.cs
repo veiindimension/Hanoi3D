@@ -60,7 +60,7 @@ public class ResetButton : MonoBehaviour
         GameController gameController = FindObjectOfType<GameController>();
         if (gameController != null)
         {
-            gameController.ResetAllDisks();
+            gameController.ResetGameWithDiskCount();
         }
         else
         {

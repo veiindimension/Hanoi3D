@@ -108,6 +108,9 @@ public class DiskSelector3D : MonoBehaviour
         // Aggiorna il numero di dischi nel GameController
         gameController.diskCount = newDiskCount;
 
+        // Chiama il metodo per reimpostare il gioco con il nuovo numero di dischi
+        gameController.ResetGameWithDiskCount();
+
         Debug.Log($"[DiskSelector3D] Numero di dischi aggiornato a {newDiskCount} basato sul selector {closestIndex + 1}.");
     }
 }

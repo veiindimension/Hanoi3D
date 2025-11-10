@@ -374,8 +374,73 @@ namespace Hanoi.Controller
         /// </summary>
         public void ResetGameWithDiskCount()
         {
-            InitializeGame(); // Reinitialize the game with the updated disk count
-            Debug.Log($"[GameController] Game reset with {diskCount} disks.");
+            if (gameModel != null)
+            {
+                // Reinitialize the game model with the current diskCount
+                gameModel.Initialize(diskCount);
+
+                // Reset the move count
+                gameModel.ResetMoveCount();
+                UpdateMoveCountUI();
+
+                // Clear all towers in the logical model
+                foreach (var tower in gameModel.Towers)
+                {
+                    tower.Clear();
+                }
+
+                // Find all DiskView instances in the scene and destroy them
+                var existingDiskViews = FindObjectsOfType<DiskView>();
+                foreach (var diskView in existingDiskViews)
+                {
+                    Destroy(diskView.gameObject);
+                }
+
+                // Spawn new DiskView instances based on diskCount
+                float cumulativeHeight = 0f;
+                for (int i = diskCount; i >= 1; i--) // Spawn disks from largest to smallest
+                {
+                    // Create a new DiskModel with the correct size and starting tower index
+                    DiskModel newDiskModel = new DiskModel(i, 0);
+
+                    // Push the disk into the logical model's Tower 0
+                    gameModel.Towers[0].Push(newDiskModel);
+
+                    // Instantiate a new DiskView
+                    GameObject newDisk = Instantiate(diskPrefab);
+                    DiskView newDiskView = newDisk.GetComponent<DiskView>();
+                    if (newDiskView != null)
+                    {
+                        // Initialize the DiskView with the DiskModel and GameController
+                        newDiskView.Initialize(newDiskModel, this);
+
+                        // Calculate the initial position of the disk
+                        Transform towerTransform = GetTowerTransforms()[0];
+                        float diskHeight = newDiskView.GetComponentInChildren<Renderer>().bounds.size.y;
+                        float yPos = towerTransform.position.y + cumulativeHeight + diskHeight * 0.5f;
+                        Vector3 initialPosition = new Vector3(towerTransform.position.x, yPos, towerTransform.position.z);
+
+                        // Set the disk's position
+                        newDisk.transform.position = initialPosition;
+
+                        // Reset the rigidbody velocities
+                        Rigidbody rb = newDisk.GetComponent<Rigidbody>();
+                        if (rb != null)
+                        {
+                            rb.linearVelocity = Vector3.zero;
+                            rb.angularVelocity = Vector3.zero;
+                        }
+
+                        cumulativeHeight += diskHeight + diskVerticalGap; // Add vertical gap between disks
+                    }
+                }
+
+                Debug.Log($"[GameController] All disks have been reset to their initial positions, move counter reset, and logical model updated with {diskCount} disks.");
+            }
+            else
+            {
+                Debug.LogError("[GameController] GameModel is not initialized.");
+            }
         }
 
         private void ShowVictoryScreen()
