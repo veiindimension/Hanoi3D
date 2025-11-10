@@ -396,12 +396,17 @@ namespace Hanoi.Controller
                     Destroy(diskView.gameObject);
                 }
 
-                // Spawn new DiskView instances based on diskCount
+                // Generate disk order based on spawnDisksOrdered
+                int[] diskOrder = spawnDisksOrdered
+                    ? Enumerable.Range(1, diskCount).Reverse().ToArray() // Largest to smallest
+                    : Enumerable.Range(1, diskCount).OrderBy(x => Random.value).ToArray(); // Random order
+
+                // Spawn new DiskView instances based on diskOrder
                 float cumulativeHeight = 0f;
-                for (int i = diskCount; i >= 1; i--) // Spawn disks from largest to smallest
+                foreach (int size in diskOrder)
                 {
                     // Create a new DiskModel with the correct size and starting tower index
-                    DiskModel newDiskModel = new DiskModel(i, 0);
+                    DiskModel newDiskModel = new DiskModel(size, 0);
 
                     // Push the disk into the logical model's Tower 0
                     gameModel.Towers[0].Push(newDiskModel);
