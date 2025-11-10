@@ -9,6 +9,7 @@ using System.Linq;
 using UnityEngine.UI;
 using TMPro;
 
+
 namespace Hanoi.Controller
 {
     /// <summary>
@@ -28,13 +29,15 @@ namespace Hanoi.Controller
         [SerializeField] private GameObject diskPrefab;
 
         [Header("Settings")]
-        [SerializeField, Range(3, 10)] private int diskCount = 4;
+        [SerializeField, Range(3, 10)] public int diskCount = 4;
         [SerializeField] private float diskVerticalGap = 0.02f;
         [Tooltip("If true, disks will be spawned in order on the first tower.")]
         [SerializeField] private bool spawnDisksOrdered = true;
 
         [Header("UI References")]
         [SerializeField] private TextMeshProUGUI movesCounterText; //Refers to the text of the UI
+
+
 
         // Logical model
         private GameModel gameModel;
@@ -363,6 +366,16 @@ namespace Hanoi.Controller
             {
                 Debug.LogError("[GameController] GameModel is not initialized.");
             }
+        }
+
+
+        /// <summary>
+        /// Resets the game with the number of disks selected by the DiskSelector.
+        /// </summary>
+        public void ResetGameWithDiskCount()
+        {
+            InitializeGame(); // Reinitialize the game with the updated disk count
+            Debug.Log($"[GameController] Game reset with {diskCount} disks.");
         }
 
         private void ShowVictoryScreen()
