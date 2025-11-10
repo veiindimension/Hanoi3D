@@ -58,6 +58,13 @@ namespace Hanoi.Model
             MoveCount++;
         }
 
+        /// <summary>
+        /// Resets the move count to zero.
+        /// </summary>
+        public void ResetMoveCount()
+        {
+            MoveCount = 0;
+        }
 
         public void IncrementMoveCount()
         {

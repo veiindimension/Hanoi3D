@@ -1,0 +1,70 @@
+using Hanoi.Controller;
+using System.Collections;
+using UnityEngine;
+
+public class ResetButton : MonoBehaviour
+{
+    private Vector3 initialPosition;
+    private bool isAnimating = false;
+
+    [SerializeField] private float animationDuration = 0.2f; // Durata dell'animazione
+    [SerializeField] private float animationOffset = -0.05f; // Offset sull'asse Y
+
+    private void Start()
+    {
+        // Salva la posizione iniziale
+        initialPosition = transform.position;
+    }
+
+    private void OnMouseDown()
+    {
+        if (!isAnimating)
+        {
+            StartCoroutine(AnimateButton());
+            ResetDisks();
+        }
+    }
+
+    private IEnumerator AnimateButton()
+    {
+        isAnimating = true;
+
+        // Abbassa il pulsante
+        Vector3 targetPosition = initialPosition + new Vector3(0, animationOffset, 0);
+        float elapsedTime = 0f;
+
+        while (elapsedTime < animationDuration)
+        {
+            transform.position = Vector3.Lerp(initialPosition, targetPosition, elapsedTime / animationDuration);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        transform.position = targetPosition;
+
+        // Torna alla posizione iniziale
+        elapsedTime = 0f;
+        while (elapsedTime < animationDuration)
+        {
+            transform.position = Vector3.Lerp(targetPosition, initialPosition, elapsedTime / animationDuration);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        transform.position = initialPosition;
+        isAnimating = false;
+    }
+
+    private void ResetDisks()
+    {
+        GameController gameController = FindObjectOfType<GameController>();
+        if (gameController != null)
+        {
+            gameController.ResetAllDisks();
+        }
+        else
+        {
+            Debug.LogError("[ResetButton] GameController non trovato nella scena.");
+        }
+    }
+}

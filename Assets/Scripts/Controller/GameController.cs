@@ -259,9 +259,100 @@ namespace Hanoi.Controller
 
         public void UpdateMoveCountUI()
         {
+            // Find the MovesCounterText object in the scene
+            var movesCounterText = GameObject.Find("MovesCounterText").GetComponent<TMPro.TextMeshProUGUI>();
             if (movesCounterText != null)
             {
+                // Update the text with the current move count
                 movesCounterText.text = $"Moves: {gameModel.MoveCount}";
+            }
+            else
+            {
+                Debug.LogError("[GameController] MovesCounterText not found in the scene or missing TextMeshProUGUI component.");
+            }
+        }
+
+        public void ResetDisksToInitialPositions()
+        {
+            if (gameModel != null)
+            {
+                gameModel.Initialize(gameModel.DiskCount);
+
+                var diskViews = FindObjectsOfType<DiskView>();
+                foreach (var diskView in diskViews)
+                {
+                    diskView.ResetPosition();
+                }
+
+                Debug.Log("[GameController] Dischi resettati alle posizioni iniziali.");
+            }
+            else
+            {
+                Debug.LogError("[GameController] GameModel non inizializzato.");
+            }
+        }
+        /// <summary>
+        /// Metodo per resettare tutti i dischi alle loro posizioni iniziali.
+        /// </summary>
+        public void ResetAllDisks()
+        {
+            if (gameModel != null)
+            {
+                // Reinitialize the game model
+                gameModel.Initialize(gameModel.DiskCount);
+
+                // Reset the move count
+                gameModel.ResetMoveCount();
+                UpdateMoveCountUI();
+
+                // Clear all towers in the logical model
+                foreach (var tower in gameModel.Towers)
+                {
+                    tower.Clear();
+                }
+
+                // Find all DiskView instances in the scene and sort them by size (largest to smallest)
+                var diskViews = FindObjectsOfType<DiskView>().OrderByDescending(diskView => diskView.GetModel().Size).ToList();
+
+                float cumulativeHeight = 0f;
+                foreach (var diskView in diskViews)
+                {
+                    // Get the disk model
+                    DiskModel diskModel = diskView.GetModel();
+                    if (diskModel != null)
+                    {
+                        // Update the disk's position in the model
+                        diskModel.TowerIndex = 0;
+
+                        // Push the disk into the logical model's Tower 0
+                        gameModel.Towers[0].Push(diskModel);
+
+                        // Calculate the initial position of the disk
+                        Transform towerTransform = GetTowerTransforms()[0];
+                        float diskHeight = diskView.GetComponentInChildren<Renderer>().bounds.size.y;
+                        float yPos = towerTransform.position.y + cumulativeHeight + diskHeight * 0.5f;
+                        Vector3 initialPosition = new Vector3(towerTransform.position.x, yPos, towerTransform.position.z);
+
+                        // Set the disk's position
+                        diskView.transform.position = initialPosition;
+
+                        // Reset the rigidbody velocities
+                        Rigidbody rb = diskView.GetComponent<Rigidbody>();
+                        if (rb != null)
+                        {
+                            rb.linearVelocity = Vector3.zero;
+                            rb.angularVelocity = Vector3.zero;
+                        }
+
+                        cumulativeHeight += diskHeight + 0.1f; // 0.1f is the vertical gap between disks
+                    }
+                }
+
+                Debug.Log("[GameController] All disks have been reset to their initial positions, move counter reset, and logical model updated.");
+            }
+            else
+            {
+                Debug.LogError("[GameController] GameModel is not initialized.");
             }
         }
 
