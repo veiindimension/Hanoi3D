@@ -260,11 +260,20 @@ namespace Hanoi.Controller
         public void UpdateMoveCountUI()
         {
             // Find the MovesCounterText object in the scene
-            var movesCounterText = GameObject.Find("MovesCounterText").GetComponent<TMPro.TextMeshProUGUI>();
+            var movesCounterText = GameObject.Find("MovesCounterText").GetComponent<TextMeshProUGUI>();
             if (movesCounterText != null)
             {
-                // Update the text with the current move count
-                movesCounterText.text = $"Moves: {gameModel.MoveCount}";
+                // Check if the game is complete
+                if (gameModel.IsGameComplete())
+                {
+                    // Update the text to display the victory message
+                    movesCounterText.text = $"You won! With {gameModel.DiskCount} disks and {gameModel.MoveCount} moves!";
+                }
+                else
+                {
+                    // Update the text with the current move count
+                    movesCounterText.text = $"Moves: {gameModel.MoveCount}";
+                }
             }
             else
             {
@@ -358,7 +367,16 @@ namespace Hanoi.Controller
 
         private void ShowVictoryScreen()
         {
-            Debug.Log($"[GameController] Victory! All disks are stacked in order on the third tower in {gameModel.MoveCount} moves.");
+            if (movesCounterText != null)
+            {
+                movesCounterText.text = $"You won!\nWith {gameModel.DiskCount} disks and {gameModel.MoveCount} moves!";
+            }
+            else
+            {
+                Debug.LogError("[GameController] MovesCounterText not found in the scene or missing TextMeshProUGUI component.");
+            }
+
+            Debug.Log($"[GameController] Victory! All disks are stacked in order on TowerC in {gameModel.MoveCount} moves.");
         }
     }
 }

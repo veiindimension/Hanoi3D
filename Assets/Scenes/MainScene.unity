@@ -264,8 +264,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190304
-  m_fontColor: {r: 0.8784314, g: 0, b: 0, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1447,7 +1447,7 @@ MonoBehaviour:
   towerB: {fileID: 1469607543}
   towerC: {fileID: 1991611970}
   diskPrefab: {fileID: 6280524699770620334, guid: 6062fd85bb3a6f143b414a7561b28487, type: 3}
-  diskCount: 4
+  diskCount: 3
   diskVerticalGap: 0.001
   spawnDisksOrdered: 1
   movesCounterText: {fileID: 515568405}

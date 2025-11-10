@@ -2,6 +2,7 @@
 // This was created with the help of Assistant, a Unity Artificial Intelligence product.
 
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Hanoi.Model
 {
@@ -76,17 +77,25 @@ namespace Hanoi.Model
         /// </summary>
         public bool IsGameComplete()
         {
-            if (Towers[2].Count != DiskCount) return false;
+            if (Towers[2].Count != DiskCount)
+            {
+                Debug.Log($"[GameModel] TowerC does not contain all disks. Current count: {Towers[2].Count}, Expected count: {DiskCount}");
+                return false;
+            }
 
-            // Check if disks are in order from largest to smallest
-            int expectedSize = DiskCount;
+            // Check if disks are in order from smallest to largest
+            int expectedSize = 1; // Start with the smallest disk size
             foreach (var disk in Towers[2].Disks)
             {
                 if (disk.Size != expectedSize)
+                {
+                    Debug.Log($"[GameModel] Disk order incorrect in TowerC. Expected size: {expectedSize}, Found size: {disk.Size}");
                     return false;
-                expectedSize--;
+                }
+                expectedSize++;
             }
 
+            Debug.Log("[GameModel] Victory condition met: All disks are in order on TowerC.");
             return true;
         }
     }
