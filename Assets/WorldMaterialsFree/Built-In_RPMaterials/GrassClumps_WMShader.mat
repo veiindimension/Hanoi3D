@@ -98,14 +98,14 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _HeightDisplacement: 0
+    - _HeightDisplacement: 0.081
     - _Metallic: 0
-    - _MetallicStrength: 0.671
+    - _MetallicStrength: 0.719
     - _Mode: 0
-    - _NormalScale: 2.937
+    - _NormalScale: 1.41
     - _OcclusionStrength: 1
     - _Parallax: 0.02
-    - _SmoothnessStrength: 0.1
+    - _SmoothnessStrength: 1.471
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
