@@ -32,7 +32,7 @@ namespace Hanoi.Controller
         [SerializeField, Range(3, 10)] public int diskCount = 4;
         [SerializeField] private float diskVerticalGap = 0.02f;
         [Tooltip("If true, disks will be spawned in order on the first tower.")]
-        [SerializeField] private bool spawnDisksOrdered = true;
+        [SerializeField] public bool spawnDisksOrdered = true;
 
         [Header("UI References")]
         [SerializeField] private TextMeshProUGUI movesCounterText; //Refers to the text of the UI
@@ -366,6 +366,13 @@ namespace Hanoi.Controller
             {
                 Debug.LogError("[GameController] GameModel is not initialized.");
             }
+        }
+
+
+        public void ToggleSpawnDisksOrdered()
+        {
+            spawnDisksOrdered = !spawnDisksOrdered;
+            Debug.Log($"[GameController] spawnDisksOrdered set to: {spawnDisksOrdered}");
         }
 
 
