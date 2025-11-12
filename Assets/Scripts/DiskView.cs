@@ -249,7 +249,9 @@ namespace Hanoi.View
             if (model.TowerIndex == 0)
             {
                 // Reset the disk to its original position on Tower 0
-                transform.position = controller.GetTowerTransforms()[0].position;
+                Vector3 towerPosition = controller.GetTowerTransforms()[0].position;
+                transform.position = new Vector3(towerPosition.x, towerPosition.y + 1, towerPosition.z);
+
 
                 if (rb != null)
                 {
@@ -264,7 +266,9 @@ namespace Hanoi.View
             if (model.TowerIndex == 1)
             {
                 // Reset the disk to its original position on Tower 1
-                transform.position = controller.GetTowerTransforms()[1].position;
+                Vector3 towerPosition = controller.GetTowerTransforms()[1].position;
+                transform.position = new Vector3(towerPosition.x, towerPosition.y + 1, towerPosition.z);
+
 
                 if (rb != null)
                 {
@@ -279,7 +283,9 @@ namespace Hanoi.View
             if (model.TowerIndex == 2)
             {
                 // Reset the disk to its original position on Tower 2
-                transform.position = controller.GetTowerTransforms()[2].position;
+                Vector3 towerPosition = controller.GetTowerTransforms()[2].position;
+                transform.position = new Vector3(towerPosition.x, towerPosition.y + 1, towerPosition.z);
+
 
                 if (rb != null)
                 {
