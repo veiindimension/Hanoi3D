@@ -37,6 +37,12 @@ namespace Hanoi.Controller
         [Header("UI References")]
         [SerializeField] private TextMeshProUGUI movesCounterText; //Refers to the text of the UI
 
+        [Header("Audio")]
+        [SerializeField] private AudioSource audioSource; // Componente AudioSource per riprodurre il suono
+        [SerializeField] private AudioClip yaySoundEffect; // Clip audio per il suono di vittoria
+        [SerializeField] private AudioClip diskHoldSFX; // Suono per il pick
+        [SerializeField] private AudioClip diskReleaseSFX; // Suono per il release
+        [SerializeField] private AudioClip wrongClickSFX; // Suono per il click errato
 
 
         // Logical model
@@ -49,6 +55,8 @@ namespace Hanoi.Controller
 
         // Camera cache
         private Camera mainCamera;
+
+        private bool hasVictoryScreenShown = false;
 
         private void Awake()
         {
@@ -132,10 +140,12 @@ namespace Hanoi.Controller
             HandleMouseRaycast();
             HandleMouseClickRelease();
 
-            if (gameModel.IsGameComplete())
+            if (gameModel.IsGameComplete() && !hasVictoryScreenShown)
             {
+                hasVictoryScreenShown = true; // Set the flag to true to prevent multiple calls
                 Debug.Log($"[GameController] Victory! All disks are stacked in order on the third tower in {gameModel.MoveCount} moves.");
                 ShowVictoryScreen();
+                
             }
         }
 
@@ -446,27 +456,92 @@ namespace Hanoi.Controller
                         cumulativeHeight += diskHeight + diskVerticalGap; // Add vertical gap between disks
                     }
                 }
-
+                
                 Debug.Log($"[GameController] All disks have been reset to their initial positions, move counter reset, and logical model updated with {diskCount} disks.");
             }
             else
             {
                 Debug.LogError("[GameController] GameModel is not initialized.");
             }
+            hasVictoryScreenShown = false;
         }
 
         private void ShowVictoryScreen()
         {
+            // Display the victory message
             if (movesCounterText != null)
             {
-                movesCounterText.text = $"You won!\nWith {gameModel.DiskCount} disks and {gameModel.MoveCount} moves!";
+                movesCounterText.text = $"You won!\\nWith {gameModel.DiskCount} disks and {gameModel.MoveCount} moves!";
             }
             else
             {
                 Debug.LogError("[GameController] MovesCounterText not found in the scene or missing TextMeshProUGUI component.");
             }
 
+            // Play the victory sound effect immediately
+            if (audioSource != null && yaySoundEffect != null)
+            {
+                audioSource.PlayOneShot(yaySoundEffect); // Play the victory sound effect immediately
+            }
+            else
+            {
+                Debug.LogError("[GameController] AudioSource or Yay Sound Effect not assigned.");
+            }
+
             Debug.Log($"[GameController] Victory! All disks are stacked in order on TowerC in {gameModel.MoveCount} moves.");
+            
         }
+
+
+
+        /// <summary>
+        /// Riproduce il suono quando un disco viene preso.
+        /// </summary>
+        public void PlayDiskHoldSound()
+        {
+            if (audioSource != null && diskHoldSFX != null)
+            {
+                audioSource.PlayOneShot(diskHoldSFX);
+            }
+            else
+            {
+                Debug.LogWarning("[GameController] DiskHoldSFX non assegnato o AudioSource mancante.");
+            }
+        }
+
+
+
+        /// <summary>
+        /// Riproduce il suono quando un disco viene rilasciato.
+        /// </summary>
+        public void PlayDiskReleaseSound()
+        {
+            if (audioSource != null && diskReleaseSFX != null)
+            {
+                audioSource.PlayOneShot(diskReleaseSFX);
+            }
+            else
+            {
+                Debug.LogWarning("[GameController] DiskReleaseSFX non assegnato o AudioSource mancante.");
+            }
+        }
+
+
+        /// <summary>
+        /// Riproduce il suono quando si verifica un click errato.
+        /// </summary>
+        public void PlayWrongClickSound()
+        {
+            if (audioSource != null && wrongClickSFX != null)
+            {
+                audioSource.PlayOneShot(wrongClickSFX);
+            }
+            else
+            {
+                Debug.LogWarning("[GameController] WrongClickSFX non assegnato o AudioSource mancante.");
+            }
+        }
+
+
     }
 }

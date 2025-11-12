@@ -1,7 +1,5 @@
 fileFormatVersion: 2
-guid: b895990af692510449fdb57366df3ee8
-labels:
-- UnityAI
+guid: 51aa1fbbda17d354cb5e82b9ae9ef9bb
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -9,7 +7,7 @@ TextureImporter:
   mipmaps:
     mipMapMode: 0
     enableMipMap: 1
-    sRGBTexture: 0
+    sRGBTexture: 1
     linearTexture: 0
     fadeOut: 0
     borderMipMap: 0
@@ -56,7 +54,7 @@ TextureImporter:
   alphaUsage: 1
   alphaIsTransparency: 0
   spriteTessellationDetail: -1
-  textureType: 1
+  textureType: 0
   textureShape: 1
   singleChannelComponent: 0
   flipbookRows: 1

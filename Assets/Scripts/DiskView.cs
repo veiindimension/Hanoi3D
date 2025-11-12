@@ -7,6 +7,9 @@ using Hanoi.Controller;
 using System.Collections;
 using System.Linq;
 
+
+
+
 namespace Hanoi.View
 {
     /// <summary>
@@ -16,6 +19,8 @@ namespace Hanoi.View
     /// </summary>
     [RequireComponent(typeof(Collider))]
     [RequireComponent(typeof(Rigidbody))]
+
+
     public class DiskView : MonoBehaviour
     {
         private DiskModel model;
@@ -45,6 +50,8 @@ namespace Hanoi.View
         [SerializeField] private float baseThickness = 1.0f;
         [SerializeField] private float minRadius = 1.0f;
         [SerializeField] private float maxRadius = 1.8f;
+
+        
 
         // Respawn position
         private Vector3 initialPosition;
@@ -160,6 +167,7 @@ namespace Hanoi.View
             {
                 rend.materials = new Material[] { baseMaterial };
             }
+            controller.PlayDiskHoldSound();
         }
 
         public void OnRelease()
@@ -172,9 +180,11 @@ namespace Hanoi.View
             rb.linearDamping = 1f;
             rb.angularDamping = 0.1f;
 
-            // Remove outline → restore base
+            // Remove outline → restore bases
             if (baseMaterial != null)
                 rend.materials = new Material[] { baseMaterial };
+
+            controller.PlayDiskReleaseSound();
 
             // Evaluate landing position
             StartCoroutine(CheckLandingAfterDelay());
@@ -279,6 +289,7 @@ namespace Hanoi.View
 
                 Debug.Log("[DiskView] Disk reset to original position on Tower 2.");
             }
+            controller.PlayWrongClickSound();
         }
 
 
@@ -318,6 +329,7 @@ namespace Hanoi.View
             DiskModel targetTopDisk = targetTower.Peek();
             if (targetTopDisk != null && model.Size > targetTopDisk.Size)
             {
+                controller.PlayWrongClickSound();
                 Debug.LogWarning($"[DiskView] Cannot place Disk {model.Size} on top of Disk {targetTopDisk.Size} in Tower {targetIndex}. Returning to initial position.");
                 // Check if the initial position was Tower 0
                 ResetPosition();

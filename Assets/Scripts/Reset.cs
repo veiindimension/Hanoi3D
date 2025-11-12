@@ -10,6 +10,10 @@ public class ResetButton : MonoBehaviour
     [SerializeField] private float animationDuration = 0.2f; // Durata dell'animazione
     [SerializeField] private float animationOffset = -0.05f; // Offset sull'asse Y
 
+    [Header("Audio")]
+    [SerializeField] private AudioClip buttonSFX; // Clip audio per il suono del pulsante
+    [SerializeField] private AudioSource audioSource; // Componente AudioSource per riprodurre il suono
+
     private void Start()
     {
         // Salva la posizione iniziale
@@ -18,6 +22,12 @@ public class ResetButton : MonoBehaviour
 
     private void OnMouseDown()
     {
+
+        if (audioSource != null && buttonSFX != null)
+        {
+            audioSource.PlayOneShot(buttonSFX);
+        }
+
         if (!isAnimating)
         {
             StartCoroutine(AnimateButton());

@@ -6,6 +6,13 @@ public class QuitButton : MonoBehaviour
     [SerializeField] private float animationDuration = 0.1f; // Durata dell'animazione
     [SerializeField] private float animationOffset = -0.1f; // Offset dell'animazione
 
+    [Header("Audio")]
+    [SerializeField] private AudioClip buttonSFX; // Clip audio per il suono del pulsante
+    [SerializeField] private AudioSource audioSource; // Componente AudioSource per riprodurre il suono
+
+
+
+
     private Vector3 initialPosition;
     private bool isAnimating = false;
 
@@ -17,6 +24,12 @@ public class QuitButton : MonoBehaviour
     private void OnMouseDown()
     {
         Debug.Log("[QuitButton] Button clicked!"); // Debug log per verificare il click del pulsante
+
+        if (audioSource != null && buttonSFX != null)
+        {
+            audioSource.PlayOneShot(buttonSFX);
+        }
+
 
         if (!isAnimating)
         {

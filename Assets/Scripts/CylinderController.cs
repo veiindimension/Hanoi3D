@@ -6,6 +6,10 @@ public class CylinderController : MonoBehaviour
     [Header("Riferimenti")]
     [SerializeField] private GameController gameController; // Riferimento al GameController
     [SerializeField] private Transform selectorsParent; // Riferimento al GameObject "Selectors"
+    [SerializeField] private AudioSource audioSource; // Riferimento al componente AudioSource
+    [SerializeField] private AudioClip lever1SFX; // Clip audio per il click del mouse
+    [SerializeField] private AudioClip lever2SFX; // Clip audio per il rilascio del mouse
+
 
     private Camera mainCamera;
     private bool isDragging = false;
@@ -41,6 +45,12 @@ public class CylinderController : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
+
+            if (audioSource != null && lever1SFX != null)
+            {
+                audioSource.clip = lever1SFX;
+                audioSource.Play();
+            }
             isDragging = true;
             dragOffset = transform.position - GetMouseWorldPosition();
             Debug.Log("[CylinderController] Inizio trascinamento.");
@@ -51,6 +61,11 @@ public class CylinderController : MonoBehaviour
     {
         if (Input.GetMouseButtonUp(0))
         {
+            if (audioSource != null && lever2SFX != null)
+            {
+                audioSource.clip = lever2SFX;
+                audioSource.Play();
+            }
             isDragging = false;
             SnapToClosestSelector();
             Debug.Log("[CylinderController] Fine trascinamento. Posizione cilindro: " + transform.position);
