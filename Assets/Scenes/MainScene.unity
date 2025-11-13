@@ -730,7 +730,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -247.6936, y: 0, z: -325.53003, w: 0}
+  m_margin: {x: -813.3186, y: 0, z: -861.84985, w: -78.63306}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -1419,10 +1419,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.CanvasScaler
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -1825,7 +1825,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1133887686}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c5bdd25a4b1aac46b42c723ea8bfc5a, type: 3}
+  m_Script: {fileID: 11500000, guid: 940d37695dc971c4d8e0c2c57e0d818c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::QuitButton
   animationDuration: 0.1
@@ -2282,11 +2282,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1274938474}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b6789e8758461647bc268aefe597b96, type: 3}
+  m_Script: {fileID: 11500000, guid: d3b20610e7b1a74428446da1c4c1d8b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ResetButton
-  animationDuration: 0.1
-  animationOffset: -0.1
+  animationDuration: 0.2
+  animationOffset: -0.05
   buttonSFX: {fileID: 8300000, guid: 2b67a3ad791e60641a874856c62ff22f, type: 3}
   audioSource: {fileID: 1274938482}
 --- !u!65 &1274938479
@@ -2574,7 +2574,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1402981246}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a8b10ab96ff7ba4e8e28de30fc9f07a, type: 3}
+  m_Script: {fileID: 11500000, guid: 53dd4f2c8c58e1644881b1a3960ba49a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Hanoi.Controller.GameController
   towerA: {fileID: 619345875}
@@ -2582,7 +2582,7 @@ MonoBehaviour:
   towerC: {fileID: 1991611970}
   diskPrefab: {fileID: 6280524699770620334, guid: 6062fd85bb3a6f143b414a7561b28487, type: 3}
   diskCount: 3
-  diskVerticalGap: 0.001
+  diskVerticalGap: 0.1
   spawnDisksOrdered: 1
   movesCounterText: {fileID: 515568405}
   audioSource: {fileID: 1402981250}
@@ -3029,7 +3029,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1436129008}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a11ba9c3e5868ca439fa6bde9bf8cdf7, type: 3}
+  m_Script: {fileID: 11500000, guid: 4cc39b91836fa1d4381d15b122aca63a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CylinderController
   gameController: {fileID: 1402981248}
@@ -3962,7 +3962,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1889622941}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c7f57ec1da2d23f4480bdac22f45d6b8, type: 3}
+  m_Script: {fileID: 11500000, guid: 289239b5cc5e05641b9524e1c7ca740d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OrderButton
   gameController: {fileID: 1402981248}
