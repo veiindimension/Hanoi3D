@@ -1,2 +1,2 @@
 # Hanoi3DTEST
-Simple project test for STAR7
+Traditional puzzle game - Tower of Hanoi, made with Unity and Blender, fully interactive and 3D.
