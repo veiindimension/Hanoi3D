@@ -34,3 +34,5 @@ Move all disks from Tower A (leftmost) to Tower C (rightmost) following the rule
 - **Reset Button**: Click to restart with current settings
 - **Quit Button**: Click to exit the application
 
+# DOCUMENTATION
+You can review the full documentation insinde Documentation folder.
