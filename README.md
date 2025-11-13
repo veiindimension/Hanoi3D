@@ -35,4 +35,4 @@ Move all disks from Tower A (leftmost) to Tower C (rightmost) following the rule
 - **Quit Button**: Click to exit the application
 
 # DOCUMENTATION
-You can review the full documentation insinde Documentation folder.
+You can review the full documentation inside the "Documentation" folder.
