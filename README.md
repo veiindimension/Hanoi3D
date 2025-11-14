@@ -1,5 +1,5 @@
 # Hanoi3D
-Traditional puzzle game - Tower of Hanoi, made with Unity and Blender, using C# and the MVC (Model-View-Controller) design pattern., fully interactive and 3D.
+Traditional puzzle game - Tower of Hanoi, made with Unity and Blender, using C# and the MVC (Model-View-Controller) design pattern, fully interactive and 3D.
 
 
 # OVERVIEW
